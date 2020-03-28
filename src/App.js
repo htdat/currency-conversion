@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import From from './components/From.js';
+import To from './components/To.js';
+import EditCurrencies from './components/EditCurrencies.js';
+import LatestUpdate from './components/LatestUpdate.js';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Currency Conversion</h1>
       </header>
+
+      <main className="App-main">
+        <From />
+        <hr/>
+        <To />
+        <hr/>
+        <EditCurrencies />
+        <hr/>
+        <LatestUpdate />
+
+      </main>
+
+      <footer className="App-footer">
+      Made with ❤️
+      </footer>
+
     </div>
   );
 }
