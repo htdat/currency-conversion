@@ -11,7 +11,7 @@ v1:
 
 v2:
 
-- Add settings: font size settings, back or white background.
+- Add settings: font size settings, back or white background, number of decimal.
 - Work offline with service workers.
 
 ## Demo
