@@ -13,9 +13,9 @@ function App() {
       </header>
 
       <main className="App-main">
-        <From />
+        <From code="CAD"/>
         <hr/>
-        <To />
+        <To codes={['EUR', 'KRW', 'CNY', 'INR']}/>
         <hr/>
         <EditCurrencies />
         <hr/>

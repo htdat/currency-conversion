@@ -1,0 +1,7 @@
+.currency > div  {
+  display: inline-block;
+}
+
+.currency .code, .currency .name, .currency .currency-flag {
+  margin-right: 5px
+}

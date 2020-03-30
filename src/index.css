@@ -6,11 +6,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-.From > div, .To > div {
-  display: inline-block;
-}
-
-.Amount, .Currency > span {
-  padding-right: 5px
-}

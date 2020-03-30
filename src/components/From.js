@@ -9,7 +9,7 @@ class From extends React.Component {
       <div className="From">
       <h2>From:</h2>
         <Amount />
-        <Currency />
+        <Currency code={this.props.code}/>
       </div>
     );
   }
