@@ -13,6 +13,14 @@ class App extends React.Component {
       baseAmount: 1,
       changeCurrencies: ['EUR', 'KRW', 'CNY', 'INR'],
     };
+
+    this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
+  }
+
+  handleBaseAmountChange(value) {
+    this.setState({
+      baseAmount: value,
+    });
   }
 
   render(){
@@ -23,7 +31,7 @@ class App extends React.Component {
         </header>
 
         <main className="App-main">
-          <From code={this.state.baseCurrency} baseAmount={this.state.baseAmount}/>
+          <From onBaseAmountChange={this.handleBaseAmountChange} code={this.state.baseCurrency} baseAmount={this.state.baseAmount}/>
           <hr/>
           <To data={this.state}/>
           <hr/>
