@@ -5,30 +5,41 @@ import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LatestUpdate from './components/LatestUpdate.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Currency Conversion</h1>
-      </header>
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      baseCurrency: 'USD',
+      baseAmount: 1,
+      changeCurrencies: ['EUR', 'KRW', 'CNY', 'INR'],
+    };
+  }
 
-      <main className="App-main">
-        <From code="CAD"/>
-        <hr/>
-        <To codes={['EUR', 'KRW', 'CNY', 'INR']}/>
-        <hr/>
-        <EditCurrencies />
-        <hr/>
-        <LatestUpdate />
+  render(){
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>Currency Conversion</h1>
+        </header>
 
-      </main>
+        <main className="App-main">
+          <From code={this.state.baseCurrency} baseAmount={this.state.baseAmount}/>
+          <hr/>
+          <To data={this.state}/>
+          <hr/>
+          <EditCurrencies />
+          <hr/>
+          <LatestUpdate />
 
-      <footer className="App-footer">
-      Made with ❤️
-      </footer>
+        </main>
 
-    </div>
-  );
+        <footer className="App-footer">
+        Made with ❤️
+        </footer>
+
+      </div>
+    );
+  }
 }
 
 export default App;
