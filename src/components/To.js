@@ -20,8 +20,7 @@ class To extends React.Component {
   }
 
   toBlock(currencyCode) {
-    const baseCurrency = this.props.data.baseCurrency;
-    const baseAmount = this.props.data.baseAmount;
+    const {baseCurrency, baseAmount} = this.props.data;
     const convertedAmount = this.convertCurrency(baseCurrency, currencyCode, baseAmount);
     return (
       <figure className="change-currency" key={currencyCode}>
@@ -33,11 +32,11 @@ class To extends React.Component {
   }
 
   render() {
-    const codes = this.props.data.changeCurrencies;
+    const {changeCurrencies} = this.props.data;
     return (
       <div className="To">
-      <h2>To:</h2>
-        {codes.map((code) => this.toBlock(code))}
+        <h2>To:</h2>
+        {changeCurrencies.map((code) => this.toBlock(code))}
       </div>
     );
 
