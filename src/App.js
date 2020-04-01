@@ -31,7 +31,10 @@ class App extends React.Component {
         </header>
 
         <main className="App-main">
-          <From onBaseAmountChange={this.handleBaseAmountChange} code={this.state.baseCurrency} baseAmount={this.state.baseAmount}/>
+          <From
+            onBaseAmountChange={this.handleBaseAmountChange}
+            {...this.state}
+          />
           <hr/>
           <To data={this.state}/>
           <hr/>
