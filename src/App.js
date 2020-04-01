@@ -15,12 +15,26 @@ class App extends React.Component {
     };
 
     this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
+    this.handleSwapButton = this.handleSwapButton.bind(this);
   }
 
   handleBaseAmountChange(value) {
     this.setState({
       baseAmount: value,
     });
+  }
+
+  handleSwapButton(swapData) {
+    const base = this.state.baseCurrency;
+    const changes = this.state.changeCurrencies;
+    this.setState({
+      changeCurrencies: changes.map(code => {
+        return code === swapData.code ? base : code
+      }),
+      baseCurrency: swapData.code,
+      baseAmount: swapData.amount,
+    });
+
   }
 
   render(){
@@ -36,7 +50,10 @@ class App extends React.Component {
             {...this.state}
           />
           <hr/>
-          <To data={this.state}/>
+          <To
+            data={this.state}
+            handleSwapButton={this.handleSwapButton}
+          />
           <hr/>
           <EditCurrencies />
           <hr/>

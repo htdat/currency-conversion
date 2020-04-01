@@ -6,7 +6,7 @@ import rates from '../states/rates.js';
 class To extends React.Component {
 
   constructor(props){
-    super(props)
+    super(props);
   }
 
   convertCurrency(baseCurrency, changeCurrency, baseAmount) {
@@ -24,7 +24,16 @@ class To extends React.Component {
     const convertedAmount = this.convertCurrency(baseCurrency, currencyCode, baseAmount);
     return (
       <figure className="change-currency" key={currencyCode}>
-        <button>Swap</button>
+        <button
+          onClick={ () => {this.props.handleSwapButton(
+            {
+              code: currencyCode,
+              amount: convertedAmount
+            }
+          )}}
+        >
+            Swap
+        </button>
         <div className="amount">{convertedAmount}</div>
         <Currency code={currencyCode}/>
       </figure>
