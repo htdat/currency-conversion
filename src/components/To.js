@@ -1,12 +1,12 @@
 import React from 'react';
 import Currency from './Currency/Currency.js';
-import rates from '../states/rates.js';
+import {getRates} from '../lib/rates.js';
 
 function convert(baseCurrency, changeCurrency, baseAmount) {
-
+  const rates = getRates().rates;
   // All rates are from USD to other currencies
-  const usdToBase = parseFloat(rates.rates[baseCurrency] ); // E.g: USD/EUR = 0.9
-  const usdToChange = parseFloat( rates.rates[changeCurrency] ); // E.g: USD/CNY = 7.1
+  const usdToBase = parseFloat( rates[baseCurrency] ); // E.g: USD/EUR = 0.9
+  const usdToChange = parseFloat(rates[changeCurrency] ); // E.g: USD/CNY = 7.1
   const baseToChange = usdToChange / usdToBase // E.g: EUR/CNY = (USD/CNY) / (USD/EUR)
 
   const convertedAmount = baseToChange * parseFloat(baseAmount);
