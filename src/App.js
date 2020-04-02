@@ -24,17 +24,16 @@ class App extends React.Component {
     });
   }
 
-  handleSwapButton(swapData) {
+  handleSwapButton(changeCode) {
     const base = this.state.baseCurrency;
     const changes = this.state.changeCurrencies;
     this.setState({
       changeCurrencies: changes.map(code => {
-        return code === swapData.code ? base : code
+        return code === changeCode ? base : code
       }),
-      baseCurrency: swapData.code,
-      baseAmount: swapData.amount,
+      baseCurrency: changeCode,
+      baseAmount: 1,
     });
-
   }
 
   render(){

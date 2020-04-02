@@ -25,14 +25,9 @@ class To extends React.Component {
     return (
       <figure className="change-currency" key={currencyCode}>
         <button
-          onClick={ () => {this.props.handleSwapButton(
-            {
-              code: currencyCode,
-              amount: convertedAmount
-            }
-          )}}
+          onClick={ () => {this.props.handleSwapButton(currencyCode)}}
         >
-            Swap
+            🔃 Swap
         </button>
         <div className="amount">{convertedAmount}</div>
         <Currency code={currencyCode}/>
