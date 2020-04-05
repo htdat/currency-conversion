@@ -54,7 +54,7 @@ class App extends React.Component {
             handleSwapButton={this.handleSwapButton}
           />
           <hr/>
-          <EditCurrencies />
+          <EditCurrencies data={this.state} />
           <hr/>
           <LatestUpdate />
 

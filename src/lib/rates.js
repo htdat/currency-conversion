@@ -1,6 +1,13 @@
+import currencyNames from '../const/currencies.json';
 
 function getRates(){
   return openExchangeRates;
+}
+
+function getAvailCurrencies(){
+  return Object
+    .keys(getRates().rates) // get all codes in currency
+    .filter( code => {return currencyNames.hasOwnProperty(code)}); // get only codes with defeined currency names
 }
 
 // https://api.exchangeratesapi.io/latest
@@ -225,4 +232,4 @@ var openExchangeRates = {
     }
 }
 
-export {getRates}
+export {getRates, getAvailCurrencies}
