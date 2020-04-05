@@ -7,21 +7,32 @@ class EditCurrencies extends React.Component {
   constructor(props) {
     super(props);
 
-    const {baseCurrency, changeCurrencies} = this.props.data;
-    const selectedCurrencies = [baseCurrency, ...changeCurrencies]
-
     this.state = {
       open: false, // state for Modal
-      selectedCurrencies: selectedCurrencies
+      selectedCurrencies: [] // see getDerivedStateFromProps()
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+    // Any time props change and when the model is NOT open,
+    // update selectedCurrencies state from props.data 
+    const {baseCurrency, changeCurrencies} = props.data;
+    const selectedCurrencies = [baseCurrency, ...changeCurrencies]
+    if ( state.open ) {
+      return null
+    } else {
+      return {
+        selectedCurrencies: selectedCurrencies, // TEMP @todo
+      };
+    }
+  }
 
   onOpenModal = () => {
     this.setState({ open: true });
   };
 
   onCloseModal = () => {
+    this.props.updateCurrencies(this.state.selectedCurrencies);
     this.setState({ open: false });
   };
 
