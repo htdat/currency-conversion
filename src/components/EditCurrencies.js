@@ -2,14 +2,20 @@ import React from 'react';
 import Currency from './Currency/Currency.js';
 import {getAvailCurrencies} from '../lib/rates.js';
 import Modal from 'react-responsive-modal';
+import currencyNames from '../const/currencies.json';
+
+
 
 class EditCurrencies extends React.Component {
   constructor(props) {
     super(props);
 
+    this.availCurrencies = getAvailCurrencies();
+
     this.state = {
       open: false, // state for Modal
-      selectedCurrencies: [] // see getDerivedStateFromProps()
+      selectedCurrencies: [], // see getDerivedStateFromProps()
+      displayCurrencies: this.availCurrencies
     };
   }
 
@@ -50,18 +56,36 @@ class EditCurrencies extends React.Component {
 
   }
 
+  search = (e) => {
+
+    const availCurrencies = this.availCurrencies;
+    const regex = new RegExp(e.target.value.toLowerCase())
+
+    const result = availCurrencies.filter(code => {
+      const text = (code + ' ' + currencyNames[code]).toLowerCase();
+      return regex.test(text)
+    })
+
+    this.setState({
+      displayCurrencies: result
+    })
+
+  }
+
   render() {
-    const availCurrencies = getAvailCurrencies();
-    const { selectedCurrencies } = this.state;
+    const { selectedCurrencies, displayCurrencies } = this.state;
+
     const printSelectedCurrencies = selectedCurrencies.map(code => {
-      return (
+      return ! displayCurrencies.includes(code)
+        ? null
+        :  (
         <li onClick={() => this.addRemove(code)}>
           <Currency code={code}/> ⭐
         </li>
-      );
+        );
     })
 
-    const printAvailCurrencies = availCurrencies.map(code => {
+    const printOtherCurrencies = displayCurrencies.map(code => {
       return selectedCurrencies.includes(code)
         ? null
         : (
@@ -78,12 +102,10 @@ class EditCurrencies extends React.Component {
         <button onClick={this.onOpenModal}>Add / Remove / Settings</button>
         <Modal open={open} onClose={this.onCloseModal} center>
           <h1>Select currencies</h1>
+          <input type="text" placeHolder="Search currencies" onChange={this.search}/>
           <ol>
             {printSelectedCurrencies}
-          </ol>
-          <hr/>
-          <ol>
-            {printAvailCurrencies}
+            {printOtherCurrencies}
           </ol>
         </Modal>
       </>
