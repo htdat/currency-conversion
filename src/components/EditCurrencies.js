@@ -35,7 +35,10 @@ class EditCurrencies extends React.Component {
 
   onCloseModal = () => {
     this.props.updateCurrencies(this.state.selectedCurrencies);
-    this.setState({ open: false });
+    this.setState({
+      open: false,
+      displayCurrencies: this.availCurrencies,
+    });
   };
 
   addRemove = (code) => {
