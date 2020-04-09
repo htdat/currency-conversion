@@ -16,7 +16,7 @@ class From extends React.Component {
     return (
       <div className="From">
       <h2>From:</h2>
-        <input value={this.props.baseAmount} onChange={this.changeAmount}/>
+        <input value={this.props.baseAmount} onChange={this.changeAmount} type="number"/>
         <Currency code={this.props.baseCurrency}/>
       </div>
     );
