@@ -7,7 +7,7 @@ function getRates(){
 function getAvailCurrencies(){
   return Object
     .keys(getRates().rates) // get all codes in currency
-    .filter( code => {return currencyNames.hasOwnProperty(code)}); // get only codes with defeined currency names
+    .filter( code => currencyNames.hasOwnProperty(code)); // get only codes with defeined currency names
 }
 
 // https://api.exchangeratesapi.io/latest

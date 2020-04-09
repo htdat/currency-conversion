@@ -31,9 +31,7 @@ class App extends React.Component {
     this.setState({
       baseCurrency: changeCode,
       baseAmount: 1,
-      changeCurrencies: changes.map(code => {
-        return code === changeCode ? base : code
-      }),
+      changeCurrencies: changes.map(code => code === changeCode ? base : code),
     });
   }
 

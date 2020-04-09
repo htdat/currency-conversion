@@ -15,16 +15,12 @@ class EditCurrencies extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     // Any time props change and when the model is NOT open,
-    // update selectedCurrencies state from props.data 
+    // update selectedCurrencies state from props.data
     const {baseCurrency, changeCurrencies} = props.data;
-    const selectedCurrencies = [baseCurrency, ...changeCurrencies]
-    if ( state.open ) {
-      return null
-    } else {
-      return {
-        selectedCurrencies: selectedCurrencies, // TEMP @todo
-      };
-    }
+
+    return state.open
+      ? null
+      : { selectedCurrencies: [baseCurrency, ...changeCurrencies], }
   }
 
   onOpenModal = () => {
@@ -66,14 +62,13 @@ class EditCurrencies extends React.Component {
     })
 
     const printAvailCurrencies = availCurrencies.map(code => {
-      if ( selectedCurrencies.indexOf(code) !== -1 ) {
-        return null;
-      }
-      return (
-        <li onClick={() => this.addRemove(code)}>
-          <Currency code={code} />
-        </li>
-      );
+      return selectedCurrencies.includes(code)
+        ? null
+        : (
+          <li onClick={() => this.addRemove(code)}>
+            <Currency code={code} />
+          </li>
+        );
     })
 
     const { open } = this.state;
