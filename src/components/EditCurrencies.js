@@ -103,7 +103,7 @@ class EditCurrencies extends React.Component {
     return (
       <>
         <button onClick={this.onOpenModal}>Add / Remove / Settings</button>
-        <Modal open={open} onClose={this.onCloseModal} center>
+        <Modal open={open} onClose={this.onCloseModal}>
           <h1>Select currencies</h1>
           <input type="text" placeHolder="Search currencies" onChange={this.search}/>
           <ol>
