@@ -82,7 +82,7 @@ class EditCurrencies extends React.Component {
       return ! displayCurrencies.includes(code)
         ? null
         :  (
-        <li onClick={() => this.addRemove(code)}>
+        <li key={code} onClick={() => this.addRemove(code)}>
           <Currency code={code}/> ⭐
         </li>
         );
@@ -92,7 +92,7 @@ class EditCurrencies extends React.Component {
       return selectedCurrencies.includes(code)
         ? null
         : (
-          <li onClick={() => this.addRemove(code)}>
+          <li key={code} onClick={() => this.addRemove(code)}>
             <Currency code={code} />
           </li>
         );
