@@ -8,11 +8,22 @@ import LatestUpdate from './components/LatestUpdate.js';
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
+
+    const defaultState = {
       baseCurrency: 'USD',
       baseAmount: 1,
       changeCurrencies: ['EUR', 'KRW', 'CNY', 'INR'],
     };
+
+    this.state = defaultState;
+
+    // Parse settings saved in localStorage    
+    const appState = JSON.parse(localStorage.getItem('appState'));
+    if ( null !== appState ) {
+      Object.keys(defaultState).map( item => {
+        this.state[item] = appState.hasOwnProperty(item) ? appState[item] : defaultState[item]
+      });
+    }
 
     this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
     this.handleSwapButton = this.handleSwapButton.bind(this);
@@ -41,6 +52,11 @@ class App extends React.Component {
       baseAmount: 1,
       changeCurrencies: codes.slice(1),
     })
+  }
+
+  // Update localStorage when any state is changed
+  componentDidUpdate() {
+    localStorage.setItem('appState', JSON.stringify(this.state))
   }
 
   render(){
