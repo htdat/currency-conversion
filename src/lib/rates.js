@@ -1,4 +1,24 @@
 import currencyNames from '../const/currencies.json';
+import rateSources from '../const/sources.json';
+
+function canFetchRates(source = '', key = '') {
+
+  const sourceObj = Object.keys(rateSources).includes(source) ? rateSources[source] : rateSources.exchangeRateApi
+  const fetchLink = sourceObj.keyRequired
+    ? sourceObj.api.replace('{key}', key)
+    : sourceObj.api
+
+  return fetch(fetchLink)
+    .then(res => res.json())
+    .then(data => {
+       localStorage.setItem('apiData', JSON.stringify(data));
+       return data
+    })
+    .catch(error => {
+      console.error('Error fetching ' +  fetchLink + ' :' + error)
+      return error
+    });
+}
 
 function convert(baseCurrency, changeCurrency, baseAmount) {
   const rates = getRates().rates;
@@ -253,6 +273,7 @@ var openExchangeRates = {
 }
 
 export {
+  canFetchRates,
   getRates,
   getAvailCurrencies,
   convert,

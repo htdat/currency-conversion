@@ -1,0 +1,26 @@
+{
+  "exchangeRateApi": {
+    "name": "ExchangeRate-API",
+    "api": "https://api.exchangerate-api.com/v5/latest",
+    "info": "https://www.exchangerate-api.com/docs/free-exchange-rate-api",
+    "keyRequired": false
+  },
+  "fromECB": {
+    "name": "Rates from European Central Bank",
+    "api": "https://api.exchangeratesapi.io/latest",
+    "info": "https://exchangeratesapi.io/",
+    "keyRequired": false
+  },
+  "openExchangeRates": {
+    "name": "Fixer.io",
+    "api": "https://data.fixer.io/api/latest?access_key={key}",
+    "info": "https://fixer.io/documentation",
+    "keyRequired": true
+  },
+  "fixerIO": {
+    "name": "Fixer.io",
+    "api": "https://data.fixer.io/api/latest?access_key={key}",
+    "info": "https://fixer.io/documentation",
+    "keyRequired": true
+  }
+}

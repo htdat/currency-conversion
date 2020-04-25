@@ -5,8 +5,7 @@ import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LastFetchTime from './components/LastFetchTime.js';
 import InfoBox from './components/InfoBox/InfoBox.js';
-
-import {getLastFetchTime} from './lib/rates.js';
+import {getLastFetchTime, canFetchRates} from './lib/rates.js';
 
 class App extends React.Component {
   constructor(props){
@@ -62,6 +61,32 @@ class App extends React.Component {
       baseAmount: 1,
       changeCurrencies: codes.slice(1),
     })
+  }
+
+  async handleFetchData() {
+      let newStatus = this.state.dataStatus;
+      let isSucceed = await canFetchRates();
+
+      switch (this.state.dataStatus) {
+        case 'firstLoad':
+          newStatus = isSucceed ? 'ready' : 'error'
+          break;
+        case 'error':
+          newStatus = isSucceed ? 'ready' : 'error'
+          break;
+        case 'ready':
+          newStatus = isSucceed ? 'error' : 'ready'
+          break;
+        default:
+
+      }
+      this.setState({
+        dataStatus: newStatus
+      })
+  }
+
+  componentDidMount() {
+    this.handleFetchData()
   }
 
   // Update localStorage when any state is changed
