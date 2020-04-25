@@ -99,6 +99,25 @@ class App extends React.Component {
 
   render(){
 
+    let componentWithData = ! isDataReady() ? null : (
+      <>
+        <From
+          onBaseAmountChange={this.handleBaseAmountChange}
+          {...this.state}
+        />
+        <hr/>
+        <To
+          data={this.state}
+          handleSwapButton={this.handleSwapButton}
+        />
+        <hr/>
+        <EditCurrencies
+          data={this.state}
+          updateCurrencies={this.updateCurrencies}
+        />
+      </>
+    )
+
     return (
       <div className="App">
         <header className="App-header">
@@ -111,20 +130,7 @@ class App extends React.Component {
             { ...this.state.infoBoxData }
           />
           <hr/>
-          <From
-            onBaseAmountChange={this.handleBaseAmountChange}
-            {...this.state}
-          />
-          <hr/>
-          <To
-            data={this.state}
-            handleSwapButton={this.handleSwapButton}
-          />
-          <hr/>
-          <EditCurrencies
-            data={this.state}
-            updateCurrencies={this.updateCurrencies}
-          />
+          {componentWithData}
         </main>
 
         <footer className="App-footer">

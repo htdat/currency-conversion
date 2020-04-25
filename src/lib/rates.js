@@ -47,7 +47,9 @@ function isDataReady() {
 }
 
 function getRates(){
-  return openExchangeRates;
+  // return openExchangeRates;
+  return JSON.parse(localStorage.getItem('apiData'));
+
 }
 
 function getAvailCurrencies(){
