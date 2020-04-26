@@ -3,7 +3,8 @@ import './App.css';
 import From from './components/From.js';
 import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
-import LatestUpdate from './components/LatestUpdate.js';
+import LastFetchTime from './components/LastFetchTime.js';
+import {getLastFetchTime} from './lib/rates.js';
 
 class App extends React.Component {
   constructor(props){
@@ -17,7 +18,7 @@ class App extends React.Component {
 
     this.state = defaultState;
 
-    // Parse settings saved in localStorage    
+    // Parse settings saved in localStorage
     const appState = JSON.parse(localStorage.getItem('appState'));
     if ( null !== appState ) {
       Object.keys(defaultState).map( item => {
@@ -60,6 +61,7 @@ class App extends React.Component {
   }
 
   render(){
+
     return (
       <div className="App">
         <header className="App-header">
@@ -67,6 +69,8 @@ class App extends React.Component {
         </header>
 
         <main className="App-main">
+          <LastFetchTime time={getLastFetchTime()}/>
+          <hr/>
           <From
             onBaseAmountChange={this.handleBaseAmountChange}
             {...this.state}
@@ -81,9 +85,6 @@ class App extends React.Component {
             data={this.state}
             updateCurrencies={this.updateCurrencies}
           />
-          <hr/>
-          <LatestUpdate />
-
         </main>
 
         <footer className="App-footer">

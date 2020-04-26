@@ -16,6 +16,10 @@ function convert(baseCurrency, changeCurrency, baseAmount) {
   })
 }
 
+function getLastFetchTime() {
+  return localStorage.getItem('lastFetchTime');
+}
+
 function getRates(){
   return openExchangeRates;
 }
@@ -252,4 +256,5 @@ export {
   getRates,
   getAvailCurrencies,
   convert,
+  getLastFetchTime,
 }
