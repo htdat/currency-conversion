@@ -1,7 +1,7 @@
 import currencyNames from '../const/currencies.json';
 import rateSources from '../const/sources.json';
 
-function canFetchRates(source = '', key = '') {
+function canFetchData(source = '', key = '') {
 
   const sourceObj = Object.keys(rateSources).includes(source) ? rateSources[source] : rateSources.exchangeRateApi
   const fetchLink = sourceObj.keyRequired
@@ -13,11 +13,11 @@ function canFetchRates(source = '', key = '') {
     .then(data => {
        localStorage.setItem('apiData', JSON.stringify(data));
        localStorage.setItem('lastFetchTime', Date.now());
-       return data
+       return true
     })
     .catch(error => {
       console.error('Error fetching ' +  fetchLink + ' :' + error)
-      return error
+      return false
     });
 }
 
@@ -38,7 +38,12 @@ function convert(baseCurrency, changeCurrency, baseAmount) {
 }
 
 function getLastFetchTime() {
-  return localStorage.getItem('lastFetchTime');
+  return Number.parseInt(localStorage.getItem('lastFetchTime'));
+}
+
+function isDataReady() {
+  const apiData = JSON.parse(localStorage.getItem('apiData'));
+  return apiData ? true : false
 }
 
 function getRates(){
@@ -274,9 +279,10 @@ var openExchangeRates = {
 }
 
 export {
-  canFetchRates,
+  canFetchData,
   getRates,
   getAvailCurrencies,
   convert,
   getLastFetchTime,
+  isDataReady,
 }

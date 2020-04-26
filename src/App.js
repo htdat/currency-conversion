@@ -5,7 +5,7 @@ import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LastFetchTime from './components/LastFetchTime.js';
 import InfoBox from './components/InfoBox/InfoBox.js';
-import {getLastFetchTime, canFetchRates} from './lib/rates.js';
+import {getLastFetchTime, canFetchData, isDataReady} from './lib/rates.js';
 
 class App extends React.Component {
   constructor(props){
@@ -64,24 +64,27 @@ class App extends React.Component {
   }
 
   async handleFetchData() {
-      let newStatus = this.state.dataStatus;
-      let isSucceed = await canFetchRates();
-
-      switch (this.state.dataStatus) {
-        case 'firstLoad':
-          newStatus = isSucceed ? 'ready' : 'error'
-          break;
-        case 'error':
-          newStatus = isSucceed ? 'ready' : 'error'
-          break;
-        case 'ready':
-          newStatus = isSucceed ? 'error' : 'ready'
-          break;
-        default:
-
+      let infoBoxData = {
+        text: 'Loading exchange rates...',
+        type: 'info'
       }
+
+      if ( ! isDataReady() ) {
+        infoBoxData.text = 'Loading exchange rates for the first time use...'
+      }
+
       this.setState({
-        dataStatus: newStatus
+        infoBoxData: infoBoxData
+      })
+
+      const isSucceed = await canFetchData();
+
+      infoBoxData = isSucceed
+        ? { text: 'Fetching data successfully!', type: 'success'}
+        : { text: 'Can not load fetch data!', type: 'error'}
+
+      this.setState({
+        infoBoxData: infoBoxData
       })
   }
 

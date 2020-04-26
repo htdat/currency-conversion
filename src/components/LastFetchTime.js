@@ -7,7 +7,7 @@ export default class LastFetchTime extends React.Component {
     return ( this.props.time )
       ? (
           <div>
-              Exchange rates - last update: <span>{Date(this.props.time).toString()}</span>
+              Exchange rates - last update: <span>{new Date(this.props.time).toString()}</span>
           </div>
         )
       : null
