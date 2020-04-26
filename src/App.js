@@ -4,6 +4,8 @@ import From from './components/From.js';
 import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LastFetchTime from './components/LastFetchTime.js';
+import InfoBox from './components/InfoBox/InfoBox.js';
+
 import {getLastFetchTime} from './lib/rates.js';
 
 class App extends React.Component {
@@ -14,15 +16,22 @@ class App extends React.Component {
       baseCurrency: 'USD',
       baseAmount: 1,
       changeCurrencies: ['EUR', 'KRW', 'CNY', 'INR'],
+      infoBoxData: {
+        text: null,
+        type: null,
+      },
     };
 
     this.state = defaultState;
 
     // Parse settings saved in localStorage
+    const keysWithDefaultState = ['infoBoxData']
     const appState = JSON.parse(localStorage.getItem('appState'));
     if ( null !== appState ) {
-      Object.keys(defaultState).map( item => {
-        this.state[item] = appState.hasOwnProperty(item) ? appState[item] : defaultState[item]
+      Object.keys(defaultState).forEach( item => {
+        this.state[item] = appState.hasOwnProperty(item) && ! keysWithDefaultState.includes(item)
+          ? appState[item]
+          : defaultState[item]
       });
     }
 
@@ -70,6 +79,9 @@ class App extends React.Component {
 
         <main className="App-main">
           <LastFetchTime time={getLastFetchTime()}/>
+          <InfoBox
+            { ...this.state.infoBoxData }
+          />
           <hr/>
           <From
             onBaseAmountChange={this.handleBaseAmountChange}
