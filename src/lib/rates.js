@@ -12,6 +12,7 @@ function canFetchRates(source = '', key = '') {
     .then(res => res.json())
     .then(data => {
        localStorage.setItem('apiData', JSON.stringify(data));
+       localStorage.setItem('lastFetchTime', Date.now());
        return data
     })
     .catch(error => {
