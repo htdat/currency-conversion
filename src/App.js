@@ -134,7 +134,7 @@ class App extends React.Component {
         </main>
 
         <footer className="App-footer">
-        Made with ❤️
+        Made with <span role="img" aria-label="love">❤️</span>
         </footer>
 
       </div>

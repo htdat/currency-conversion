@@ -18,10 +18,10 @@ export default class InfoBox extends React.Component {
 
   render() {
     const open = this.state.open;
-    
+
     // Try two different ways to validate props
     const text = ('text' in this.props) ? this.props.text : null
-    const type = ( ! 'type' in this.props ) ? 'info'
+    const type = ! ( 'type' in this.props ) ? 'info'
       : ['info', 'success', 'error'].includes(this.props.type) ? this.props.type
       : 'info'
 
