@@ -16,6 +16,14 @@ export default class InfoBox extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps) {
+    // Make sure this component display
+    // every time it gets a new value for 'text' prop
+    if (this.props.text !== prevProps.text) {
+      this.setState({open: true})
+    }
+  }
+
   render() {
     const open = this.state.open;
 
