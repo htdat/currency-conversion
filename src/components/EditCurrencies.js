@@ -2,9 +2,7 @@ import React from 'react';
 import Currency from './Currency/Currency.js';
 import {getAvailCurrencies} from '../lib/helpers.js';
 import Modal from 'react-responsive-modal';
-import currencyNames from '../const/currencies.json';
-
-
+import currencyNames from '../const/currencies.json'
 
 class EditCurrencies extends React.Component {
   constructor(props) {
@@ -76,7 +74,7 @@ class EditCurrencies extends React.Component {
   }
 
   render() {
-    const { selectedCurrencies, displayCurrencies } = this.state;
+    const { selectedCurrencies, displayCurrencies, open } = this.state;
 
     const printSelectedCurrencies = selectedCurrencies.map(code => {
       return ! displayCurrencies.includes(code)
@@ -98,11 +96,9 @@ class EditCurrencies extends React.Component {
         );
     })
 
-    const { open } = this.state;
-
     return (
       <>
-        <button onClick={this.onOpenModal}>Add / Remove / Settings</button>
+        <button onClick={this.onOpenModal}>Edit Currencies</button>
         <Modal open={open} onClose={this.onCloseModal}>
           <h1>Select currencies</h1>
           <input type="text" placeHolder="Search currencies" onChange={this.search}/>
