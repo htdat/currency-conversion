@@ -101,7 +101,7 @@ class EditCurrencies extends React.Component {
         <button onClick={this.onOpenModal}>Edit Currencies</button>
         <Modal open={open} onClose={this.onCloseModal}>
           <h1>Select currencies</h1>
-          <input type="text" placeHolder="Search currencies" onChange={this.search}/>
+          <input type="text" placeholder="Search currencies" onChange={this.search}/>
           <ol>
             {printSelectedCurrencies}
             {printOtherCurrencies}
