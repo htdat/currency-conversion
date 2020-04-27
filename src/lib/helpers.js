@@ -1,9 +1,21 @@
 import currencyNames from '../const/currencies.json';
 import rateSources from '../const/sources.json';
 
-function canFetchData(source = '', key = '') {
+/*
+ * Fetching exchange rate data
+ * and saving data and time to localStorage.
+ *
+ * @param {string} [source=''] Name of the source
+ * @param {string} [key=''] Key coming with the specific source
+ *
+ * @return {boolean} Whether or not the call is successful
+ */
+export function canFetchData(source = '', key = '') {
 
-  const sourceObj = Object.keys(rateSources).includes(source) ? rateSources[source] : rateSources.exchangeRateApi
+  const sourceObj = Object.keys(rateSources).includes(source)
+    ? rateSources[source]
+    : rateSources.exchangeRateApi
+
   const fetchLink = sourceObj.keyRequired
     ? sourceObj.api.replace('{key}', key)
     : sourceObj.api
@@ -21,7 +33,16 @@ function canFetchData(source = '', key = '') {
     });
 }
 
-function convert(baseCurrency, changeCurrency, baseAmount) {
+/*
+ * Convert amount from one currency to another one
+ *
+ * @param {string} baseCurrency Currency code (e.g. USD) of "from" currency
+ * @param {string} changeCurrency Currency code (e.g. EUR) of "to" currency
+ * @param {float} baseAmount Amount to connvert
+ *
+ * @return {string} Value of converted amount
+ */
+export function convert(baseCurrency, changeCurrency, baseAmount) {
   const rates = getRates().rates;
   // All rates are from USD to other currencies
   const usdToBase = parseFloat( rates[baseCurrency] ); // E.g: USD/EUR = 0.9
@@ -30,39 +51,28 @@ function convert(baseCurrency, changeCurrency, baseAmount) {
 
   const convertedAmount = baseToChange * parseFloat(baseAmount);
 
-  if (isNaN(convertedAmount)) return null;
+  if (isNaN(convertedAmount)) return '';
 
   return convertedAmount.toLocaleString('fullwide', {
     maximumFractionDigits: 2
   })
 }
 
-function getLastFetchTime() {
+export function getLastFetchTime() {
   return Number.parseInt(localStorage.getItem('lastFetchTime'));
 }
 
-function isDataReady() {
+export function isDataReady() {
   const apiData = JSON.parse(localStorage.getItem('apiData'));
   return apiData ? true : false
 }
 
-function getRates(){
-  // return openExchangeRates;
+export function getRates(){
   return JSON.parse(localStorage.getItem('apiData'));
-
 }
 
-function getAvailCurrencies(){
+export function getAvailCurrencies(){
   return Object
     .keys(getRates().rates) // get all codes in currency
     .filter( code => currencyNames.hasOwnProperty(code)); // get only codes with defeined currency names
-}
-
-export {
-  canFetchData,
-  getRates,
-  getAvailCurrencies,
-  convert,
-  getLastFetchTime,
-  isDataReady,
 }
