@@ -5,7 +5,7 @@ import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LastFetchTime from './components/LastFetchTime.js';
 import InfoBox from './components/InfoBox/InfoBox.js';
-import {getLastFetchTime, canFetchData, isDataReady} from './lib/rates.js';
+import {getLastFetchTime, canFetchData, isDataReady} from './lib/helpers.js';
 
 class App extends React.Component {
   constructor(props){

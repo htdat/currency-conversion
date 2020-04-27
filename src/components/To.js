@@ -1,6 +1,6 @@
 import React from 'react';
 import Currency from './Currency/Currency.js';
-import {convert} from '../lib/rates.js';
+import {convert} from '../lib/helpers.js';
 
 class To extends React.Component {
 
