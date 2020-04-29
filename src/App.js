@@ -5,6 +5,8 @@ import To from './components/To.js';
 import EditCurrencies from './components/EditCurrencies.js';
 import LastFetchTime from './components/LastFetchTime.js';
 import InfoBox from './components/InfoBox/InfoBox.js';
+import Settings from './components/Settings.js';
+
 import {getLastFetchTime, canFetchData, isDataReady} from './lib/helpers.js';
 
 class App extends React.Component {
@@ -19,6 +21,10 @@ class App extends React.Component {
         text: null,
         type: null,
       },
+      settings: {
+        source: 'exchangeRateApi',
+        key: '',
+      }
     };
 
     this.state = defaultState;
@@ -37,6 +43,8 @@ class App extends React.Component {
     this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
     this.handleSwapButton = this.handleSwapButton.bind(this);
     this.updateCurrencies = this.updateCurrencies.bind(this);
+    this.saveAppSettings = this.saveAppSettings.bind(this);
+
   }
 
   handleBaseAmountChange(value) {
@@ -60,6 +68,12 @@ class App extends React.Component {
       baseCurrency: codes[0],
       baseAmount: 1,
       changeCurrencies: codes.slice(1),
+    })
+  }
+
+  saveAppSettings(data){
+    this.setState({
+      settings: data
     })
   }
 
@@ -115,6 +129,12 @@ class App extends React.Component {
           data={this.state}
           updateCurrencies={this.updateCurrencies}
         />
+        <hr/>
+        <Settings
+          data={this.state.settings}
+          saveAppSettings={this.saveAppSettings}
+        />
+        <hr/>
       </>
     )
 
