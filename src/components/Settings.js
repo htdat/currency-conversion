@@ -51,6 +51,9 @@ export default class Settings extends React.Component {
       )
     });
 
+    const sourceInfo = <a href={rateSources[this.state.source].info}>Learn more about this source.</a>
+
+
     const keyField = ! rateSources[this.state.source].keyRequired
       ? null
       : (
@@ -74,6 +77,10 @@ export default class Settings extends React.Component {
           <select id="data-source" value={source} onChange={this.changeSource}>
             {options}
           </select>
+          <br/><br/>
+
+          {sourceInfo}
+
           <br/><br/>
 
           {keyField}
