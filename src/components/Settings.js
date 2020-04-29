@@ -13,7 +13,15 @@ export default class Settings extends React.Component {
   }
 
   onOpenModal = () => {
-    this.setState({ open: true });
+    this.setState({
+      open: true,
+
+      // Reset these state values back to their parent values
+      // This is a bit different from handling for EditCurrencies
+      // @TODO - make sure EditCurrencies and Settings components having the same approach
+      source: this.props.data.source,
+      key: this.props.data.key,
+    });
   };
 
   onCloseModal = () => {
@@ -52,7 +60,6 @@ export default class Settings extends React.Component {
     });
 
     const sourceInfo = <a href={rateSources[this.state.source].info}>Learn more about this source.</a>
-
 
     const keyField = ! rateSources[this.state.source].keyRequired
       ? null
