@@ -158,7 +158,7 @@ class App extends React.Component {
         </main>
 
         <footer className="App-footer">
-        Made with <span role="img" aria-label="love">❤️</span>
+        Made with <span role="img" aria-label="love">❤️</span> in <a href="https://github.com/htdat/currency-conversion" target="_blank" rel="noopener noreferrer">GitHub</a>.
         </footer>
 
       </div>
