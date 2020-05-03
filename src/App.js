@@ -91,7 +91,8 @@ class App extends React.Component {
         infoBoxData: infoBoxData
       })
 
-      const isSucceed = await canFetchData();
+      const {source, key} = this.state.settings
+      const isSucceed = await canFetchData(source, key);
 
       infoBoxData = isSucceed
         ? { text: 'Fetching data successfully!', type: 'success'}
