@@ -16,11 +16,5 @@
     "api": "https://openexchangerates.org/api/latest.json?app_id={key}",
     "info": "https://docs.openexchangerates.org/",
     "keyRequired": true
-  },
-  "fixerIO": {
-    "name": "Fixer.io",
-    "api": "https://data.fixer.io/api/latest?access_key={key}",
-    "info": "https://fixer.io/documentation",
-    "keyRequired": true
   }
 }
