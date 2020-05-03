@@ -104,7 +104,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.handleFetchData()
+    // Only fetch new data each 24 hours
+    if ( Date.now() - getLastFetchTime() > 24 * 60 * 60 ) {
+      this.handleFetchData()
+    }
   }
 
   // Update localStorage when any state is changed
