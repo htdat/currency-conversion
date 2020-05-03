@@ -1,20 +1,29 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
 import rateSources from '../const/sources.json';
+import { canFetchData } from '../lib/helpers.js';
+
+function keyCheckInfo(txt) {
+  return ! txt ? null : <div>{txt}</div>
+}
 
 export default class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       open: false,
+      infoTxt: '',
       source: this.props.data.source,
       key: this.props.data.key,
     };
+
+    this.saveSettings = this.saveSettings.bind(this)
   }
 
   onOpenModal = () => {
     this.setState({
       open: true,
+      infoTxt: '',
 
       // Reset these state values back to their parent values
       // This is a bit different from handling for EditCurrencies
@@ -36,7 +45,26 @@ export default class Settings extends React.Component {
     this.setState({key: event.target.value});
   };
 
-  saveSettings = () => {
+  async saveSettings() {
+
+     if ( rateSources[this.state.source].keyRequired ) {
+
+      this.setState({
+        infoTxt: '⌛Checking the key...'
+      })
+      const keyGood = await canFetchData(this.state.source, this.state.key);
+
+      // Set infoTxt
+      const txt = keyGood
+        ? '' // Good key, say nothing
+        : '❌ Oh, wrong! Check your key or switch to a source without key'
+
+        this.setState({
+          infoTxt: txt
+        })
+
+        if ( ! keyGood ) return ''
+    }
 
     this.props.saveAppSettings({
       source: this.state.source,
@@ -70,6 +98,7 @@ export default class Settings extends React.Component {
           onChange={this.changeKey}
           defaultValue={this.state.key}
           />
+          {keyCheckInfo(this.state.infoTxt)}
         </>
       )
 
