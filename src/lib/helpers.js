@@ -23,9 +23,16 @@ export function canFetchData(source = '', key = '') {
   return fetch(fetchLink)
     .then(res => res.json())
     .then(data => {
-       localStorage.setItem('apiData', JSON.stringify(data));
-       localStorage.setItem('lastFetchTime', Date.now());
-       return true
+      if ( data && data.rates ) {
+        // The fetch is successful only if "rates" key exist in JSON response
+        // Otherwise, returned responses may happen because of invalid access_key/app_id
+        localStorage.setItem('apiData', JSON.stringify(data));
+        localStorage.setItem('lastFetchTime', Date.now());
+        return true
+      } else {
+        return false
+      }
+
     })
     .catch(error => {
       console.error('Error fetching ' +  fetchLink + ' :' + error)
