@@ -87,7 +87,7 @@ export default class Settings extends React.Component {
       )
     });
 
-    const sourceInfo = <a href={rateSources[this.state.source].info}>Learn more about this source.</a>
+    const sourceInfo = <a href={rateSources[this.state.source].info} target='_blank' rel="noopener noreferrer">Learn more about this source.</a>
 
     const keyField = ! rateSources[this.state.source].keyRequired
       ? null
