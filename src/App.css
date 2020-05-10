@@ -1,3 +1,46 @@
+
 .App {
   text-align: center;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+input[type="number"] {
+  width: 100px;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: right;
+  font-size: 16px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 16px;
 }
