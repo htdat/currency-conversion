@@ -16,6 +16,10 @@ v2:
 
 ## Demo
 
+https://currency-conversion.htdat.now.sh/
+
+![demo](https://user-images.githubusercontent.com/10045087/81503775-bd6c3800-930f-11ea-8878-41ffae95bfb3.jpg)
+
 ## Project structure
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
