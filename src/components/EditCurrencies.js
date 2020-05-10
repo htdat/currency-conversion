@@ -80,8 +80,8 @@ class EditCurrencies extends React.Component {
       return ! displayCurrencies.includes(code)
         ? null
         :  (
-        <li key={code} onClick={() => this.addRemove(code)}>
-          <Currency code={code}/> ⭐
+        <li className="selected-currency" key={code} onClick={() => this.addRemove(code)}>
+          <Currency code={code}/> <span role="img" aria-label="selected">⭐</span>
         </li>
         );
     })
@@ -102,10 +102,10 @@ class EditCurrencies extends React.Component {
         <Modal open={open} onClose={this.onCloseModal}>
           <h1>Select currencies</h1>
           <input type="text" placeholder="Search currencies" onChange={this.search}/>
-          <ol>
+          <ul className="edit-currencies">
             {printSelectedCurrencies}
             {printOtherCurrencies}
-          </ol>
+          </ul>
         </Modal>
       </>
     )
