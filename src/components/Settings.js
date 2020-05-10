@@ -47,23 +47,23 @@ export default class Settings extends React.Component {
 
   async saveSettings() {
 
-     if ( rateSources[this.state.source].keyRequired ) {
+    this.setState({
+      infoTxt: '⌛Checking the API Data...'
+    })
+    const keyGood = await canFetchData(this.state.source, this.state.key);
 
-      this.setState({
-        infoTxt: '⌛Checking the key...'
-      })
-      const keyGood = await canFetchData(this.state.source, this.state.key);
+    if ( rateSources[this.state.source].keyRequired ) {
 
       // Set infoTxt
       const txt = keyGood
         ? '' // Good key, say nothing
         : '❌ Oh, wrong! Check your key or switch to a source without key'
 
-        this.setState({
-          infoTxt: txt
-        })
+      this.setState({
+        infoTxt: txt
+      })
 
-        if ( ! keyGood ) return ''
+      if ( ! keyGood ) return ''
     }
 
     this.props.saveAppSettings({
