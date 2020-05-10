@@ -11,11 +11,13 @@ class To extends React.Component {
       <figure className="change-currency" key={currencyCode}>
         <button
           onClick={ () => {this.props.handleSwapButton(currencyCode)} }
+          className="swap"
+          label="swap"
         >
-            <span role="img" aria-label="Swap">🔃</span> Swap
+            ⇅
         </button>
-        <div className="amount">{convertedAmount}</div>
         <Currency code={currencyCode}/>
+        <div className="amount"><span>{currencyCode}</span> {convertedAmount}</div>
       </figure>
     )
   }

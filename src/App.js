@@ -123,22 +123,22 @@ class App extends React.Component {
           onBaseAmountChange={this.handleBaseAmountChange}
           {...this.state}
         />
-        <hr/>
+
         <To
           data={this.state}
           handleSwapButton={this.handleSwapButton}
         />
-        <hr/>
+
         <EditCurrencies
           data={this.state}
           updateCurrencies={this.updateCurrencies}
         />
-        <hr/>
+
         <Settings
           data={this.state.settings}
           saveAppSettings={this.saveAppSettings}
         />
-        <hr/>
+
       </>
     )
 
@@ -153,9 +153,11 @@ class App extends React.Component {
           <InfoBox
             { ...this.state.infoBoxData }
           />
-          <hr/>
+
           {componentWithData}
         </main>
+
+        <hr/>
 
         <footer className="App-footer">
         Made with <span role="img" aria-label="love">❤️</span> in <a href="https://github.com/htdat/currency-conversion" target="_blank" rel="noopener noreferrer">GitHub</a>.

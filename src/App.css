@@ -1,6 +1,12 @@
 
 .App {
+  text-align: left;
+  margin: 10px 20px 10px 20px;
+}
+
+.App-footer {
   text-align: center;
+  margin: 5px;
 }
 
 button {
@@ -15,10 +21,15 @@ button {
   border-radius: 5px;
 }
 
+button.swap {
+  padding: 3px;
+  margin: 5px 5px 0px 0px;
+}
+
 input[type="number"] {
   width: 100px;
   padding: 5px;
-  margin: 5px;
+  margin: 10px 0px;
   border: 1px solid #ccc;
   border-radius: 5px;
   text-align: right;
@@ -43,4 +54,19 @@ select {
   border-radius: 5px;
   text-align: left;
   font-size: 16px;
+}
+
+.change-currency button, .change-currency .currency{
+  display: inline;
+}
+
+.amount {
+  margin-top: 5px;
+  font-size: 25px
+}
+
+.from-currency, .change-currency {
+  border: 1px green dashed;
+  padding: 10px;
+  border-radius: 5px;
 }
