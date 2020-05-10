@@ -113,7 +113,7 @@ export default class Settings extends React.Component {
           <select id="data-source" value={source} onChange={this.changeSource}>
             {options}
           </select>
-          <br/><br/>
+          <br/>
 
           {sourceInfo}
 
@@ -121,10 +121,9 @@ export default class Settings extends React.Component {
 
           {keyField}
 
-          <br/><br/>
+          <br/>
 
-          <button onClick={this.onCloseModal}>Cancel</button> |
-          <button onClick={this.saveSettings}>Save</button>
+          <button onClick={this.onCloseModal}>Cancel</button> | <button onClick={this.saveSettings}>Save</button>
         </Modal>
       </>
     )

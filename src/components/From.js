@@ -13,11 +13,20 @@ class From extends React.Component {
   }
 
   render() {
+    const {baseCurrency, baseAmount} = this.props;
+    const formattedBaseAmount = isNaN(parseFloat(baseAmount))
+      ? ''
+      : parseFloat(baseAmount).toLocaleString('fullwide', { maximumFractionDigits: 2})
+
     return (
       <div className="From">
       <h2>From:</h2>
-        <input value={this.props.baseAmount} onChange={this.changeAmount} type="number"/>
-        <Currency code={this.props.baseCurrency}/>
+        <figure className="from-currency">
+          <Currency code={baseCurrency}/>
+          <input value={baseAmount} onChange={this.changeAmount} type="number"/>
+          <div className="amount"><span>{baseCurrency}</span> {formattedBaseAmount}</div>
+
+        </figure>
       </div>
     );
   }

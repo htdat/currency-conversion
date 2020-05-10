@@ -1,3 +1,98 @@
+
 .App {
+  text-align: left;
+  margin: 10px 20px 10px 20px;
+}
+
+.App-footer {
   text-align: center;
+  margin: 5px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Button in To Component */
+
+button.swap {
+  padding: 3px;
+  margin: 5px 5px 0px 0px;
+}
+
+input[type="number"] {
+  width: 100px;
+  padding: 5px;
+  margin: 10px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: right;
+  font-size: 16px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+select {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: left;
+  font-size: 16px;
+}
+
+/* From and To Components */
+
+.change-currency button, .change-currency .currency{
+  display: inline;
+}
+
+.amount {
+  margin-top: 5px;
+  font-size: 25px
+}
+
+.from-currency, .change-currency {
+  border: 1px green dashed;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+/* EditCurrencies Component */
+
+ul.edit-currencies {
+  list-style-type: none;
+  margin: 10px;
+  padding: 0px;
+}
+
+.edit-currencies li {
+  padding: 10px 0px;
+  border-bottom: 1px green dashed;
+}
+
+.selected-currency .currency, .selected-currency span {
+  display: inline;
+}
+
+.selected-currency span {
+  color: red;
 }
