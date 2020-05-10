@@ -16,7 +16,7 @@ class App extends React.Component {
     const defaultState = {
       baseCurrency: 'USD',
       baseAmount: 1,
-      changeCurrencies: ['EUR', 'KRW', 'CNY', 'INR'],
+      changeCurrencies: ['EUR', 'JPY'],
       infoBoxData: {
         text: null,
         type: null,
@@ -119,16 +119,6 @@ class App extends React.Component {
 
     let componentWithData = ! isDataReady() ? null : (
       <>
-        <From
-          onBaseAmountChange={this.handleBaseAmountChange}
-          {...this.state}
-        />
-
-        <To
-          data={this.state}
-          handleSwapButton={this.handleSwapButton}
-        />
-
         <EditCurrencies
           data={this.state}
           updateCurrencies={this.updateCurrencies}
@@ -139,6 +129,15 @@ class App extends React.Component {
           saveAppSettings={this.saveAppSettings}
         />
 
+        <From
+          onBaseAmountChange={this.handleBaseAmountChange}
+          {...this.state}
+        />
+
+        <To
+          data={this.state}
+          handleSwapButton={this.handleSwapButton}
+        />
       </>
     )
 
@@ -149,12 +148,13 @@ class App extends React.Component {
         </header>
 
         <main className="App-main">
-          <LastFetchTime time={getLastFetchTime()}/>
+          {componentWithData}
+
           <InfoBox
             { ...this.state.infoBoxData }
           />
 
-          {componentWithData}
+          <LastFetchTime time={getLastFetchTime()}/>
         </main>
 
         <hr/>
