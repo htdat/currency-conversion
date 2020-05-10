@@ -81,7 +81,7 @@ class EditCurrencies extends React.Component {
         ? null
         :  (
         <li className="selected-currency" key={code} onClick={() => this.addRemove(code)}>
-          <Currency code={code}/> <span role="img" aria-label="selected">⭐</span>
+          <Currency code={code}/> <span role="img" aria-label="selected">★</span>
         </li>
         );
     })

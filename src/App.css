@@ -21,6 +21,8 @@ button {
   border-radius: 5px;
 }
 
+/* Button in To Component */
+
 button.swap {
   padding: 3px;
   margin: 5px 5px 0px 0px;
@@ -56,6 +58,8 @@ select {
   font-size: 16px;
 }
 
+/* From and To Components */
+
 .change-currency button, .change-currency .currency{
   display: inline;
 }
@@ -72,7 +76,7 @@ select {
 }
 
 
-/** EditCurrencies Component style **/
+/* EditCurrencies Component */
 
 ul.edit-currencies {
   list-style-type: none;
@@ -80,12 +84,15 @@ ul.edit-currencies {
   padding: 0px;
 }
 
-.edit-currencies > li {
-  /* margin: 10px 0px;*/
+.edit-currencies li {
   padding: 10px 0px;
   border-bottom: 1px green dashed;
 }
 
-.selected-currency .currency, .selected-currency > span {
+.selected-currency .currency, .selected-currency span {
   display: inline;
+}
+
+.selected-currency span {
+  color: red;
 }
