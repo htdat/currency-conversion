@@ -8,12 +8,10 @@ class EditCurrencies extends React.Component {
   constructor(props) {
     super(props);
 
-    this.availCurrencies = getAvailCurrencies();
-
     this.state = {
       open: false, // state for Modal
       selectedCurrencies: [], // see getDerivedStateFromProps()
-      displayCurrencies: this.availCurrencies
+      displayCurrencies: getAvailCurrencies()
     };
   }
 
@@ -28,14 +26,16 @@ class EditCurrencies extends React.Component {
   }
 
   onOpenModal = () => {
-    this.setState({ open: true });
+    this.setState({
+      open: true,
+      displayCurrencies: getAvailCurrencies(),
+    });
   };
 
   onCloseModal = () => {
     this.props.updateCurrencies(this.state.selectedCurrencies);
     this.setState({
       open: false,
-      displayCurrencies: this.availCurrencies,
     });
   };
 
@@ -59,7 +59,7 @@ class EditCurrencies extends React.Component {
 
   search = (e) => {
 
-    const availCurrencies = this.availCurrencies;
+    const availCurrencies = getAvailCurrencies();
     const regex = new RegExp(e.target.value.toLowerCase())
 
     const result = availCurrencies.filter(code => {
