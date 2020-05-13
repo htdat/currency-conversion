@@ -8,6 +8,7 @@ export default class InfoBox extends React.Component {
   constructor(props){
     super (props)
     this.state = {open: true}
+    this.dismiss = this.dismiss.bind(this)
   }
 
   dismiss() {
@@ -37,7 +38,7 @@ export default class InfoBox extends React.Component {
     const classes = ['info-box', type].join(' ')
     return ! ( text && open ) ? null : (
         <div className={classes}>
-          {text} <button onClick={() => this.dismiss()} >Dismiss</button>
+          {text} <button onClick={this.dismiss}>Dismiss</button>
         </div>
     )
 
