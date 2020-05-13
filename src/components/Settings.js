@@ -1,10 +1,10 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
-import rateSources from '../const/sources.json';
+import rateSources from '../constants/sources.json';
 import { canFetchData } from '../lib/helpers.js';
 
 function keyCheckInfo(txt) {
-  return ! txt ? null : <div>{txt}</div>
+  return txt && <div>{txt}</div>
 }
 
 export default class Settings extends React.Component {
@@ -89,9 +89,7 @@ export default class Settings extends React.Component {
 
     const sourceInfo = <a href={rateSources[this.state.source].info} target='_blank' rel="noopener noreferrer">Learn more about this source.</a>
 
-    const keyField = ! rateSources[this.state.source].keyRequired
-      ? null
-      : (
+    const keyField = rateSources[this.state.source].keyRequired && (
         <>
           <label htmlFor="data-key">Key: </label>
           <input type="text" id="data-key"

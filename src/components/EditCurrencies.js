@@ -2,7 +2,7 @@ import React from 'react';
 import Currency from './Currency/Currency.js';
 import {getAvailCurrencies} from '../lib/helpers.js';
 import Modal from 'react-responsive-modal';
-import currencyNames from '../const/currencies.json'
+import currencyNames from '../constants/currencies.json'
 
 class EditCurrencies extends React.Component {
   constructor(props) {
@@ -77,9 +77,7 @@ class EditCurrencies extends React.Component {
     const { selectedCurrencies, displayCurrencies, open } = this.state;
 
     const printSelectedCurrencies = selectedCurrencies.map(code => {
-      return ! displayCurrencies.includes(code)
-        ? null
-        :  (
+      return displayCurrencies.includes(code) && (
         <li className="selected-currency" key={code} onClick={() => this.addRemove(code)}>
           <Currency code={code}/> <span role="img" aria-label="selected">★</span>
         </li>
@@ -87,11 +85,9 @@ class EditCurrencies extends React.Component {
     })
 
     const printOtherCurrencies = displayCurrencies.map(code => {
-      return selectedCurrencies.includes(code)
-        ? null
-        : (
+      return ! selectedCurrencies.includes(code) && (
           <li key={code} onClick={() => this.addRemove(code)}>
-            <Currency code={code} />
+            <Currency code={code} /> 
           </li>
         );
     })
