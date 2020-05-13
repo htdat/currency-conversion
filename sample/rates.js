@@ -1,3 +1,8 @@
+/*
+* Sample exchange rates from various sources
+* This file
+*/
+
 // https://api.exchangeratesapi.io/latest
 export const exchangeRatesApi = {
   "rates": {

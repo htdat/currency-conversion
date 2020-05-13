@@ -2,7 +2,7 @@ import React from 'react';
 import Currency from './Currency/Currency.js';
 import {getAvailCurrencies} from '../lib/helpers.js';
 import Modal from 'react-responsive-modal';
-import currencyNames from '../const/currencies.json'
+import currencyNames from '../constants/currencies.json'
 
 class EditCurrencies extends React.Component {
   constructor(props) {

@@ -1,5 +1,5 @@
-import currencyNames from '../const/currencies.json';
-import rateSources from '../const/sources.json';
+import currencyNames from '../constants/currencies.json';
+import rateSources from '../constants/sources.json';
 
 /*
  * Fetching exchange rate data

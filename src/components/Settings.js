@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-responsive-modal';
-import rateSources from '../const/sources.json';
+import rateSources from '../constants/sources.json';
 import { canFetchData } from '../lib/helpers.js';
 
 function keyCheckInfo(txt) {

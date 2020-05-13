@@ -37,7 +37,7 @@ export default class InfoBox extends React.Component {
     const classes = ['info-box', type].join(' ')
     return ! ( text && open ) ? null : (
         <div className={classes}>
-          {text} <button onClick={() => this.dismiss()} >Dissmiss</button>
+          {text} <button onClick={() => this.dismiss()} >Dismiss</button>
         </div>
     )
 
