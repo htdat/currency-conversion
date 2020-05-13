@@ -9,9 +9,7 @@ class Currency extends React.Component {
     const code = this.props.code.toUpperCase();
     const display = typeof(code) !== 'undefined' && currencyNames.hasOwnProperty(code);
 
-    return ! display
-      ? null
-      : (
+    return display && (
         <div className="currency">
           <div className={"currency-flag currency-flag-lg currency-flag-" + code.toLowerCase()}></div>
           <div className="code">{code}</div>

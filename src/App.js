@@ -116,8 +116,7 @@ class App extends React.Component {
   }
 
   render(){
-
-    let componentWithData = ! isDataReady() ? null : (
+    let componentWithData = isDataReady() && (
       <>
         <EditCurrencies
           data={this.state}
