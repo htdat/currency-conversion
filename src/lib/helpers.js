@@ -67,12 +67,11 @@ export function convert(baseCurrency, changeCurrency, baseAmount) {
 
 export function getLastFetchTime() {
   const parsed = Number.parseInt(localStorage.getItem('lastFetchTime'));
-  return Number.isNaN( parsed ) ? 0 : parsed 
+  return Number.isNaN( parsed ) ? 0 : parsed
 }
 
 export function isDataReady() {
-  const apiData = JSON.parse(localStorage.getItem('apiData'));
-  return apiData ? true : false
+  return localStorage.getItem('apiData') !== null ;
 }
 
 export function getRates(){
