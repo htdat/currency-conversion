@@ -107,7 +107,7 @@ class App extends React.Component {
 
   componentDidMount() {
     // Only fetch new data each 24 hours
-    if (Date.now() - getLastFetchTime() > 24 * 60 * 60) {
+    if (Date.now() - getLastFetchTime() > 24 * 60 * 60 * 1000) {
       this.handleFetchData();
     }
   }
