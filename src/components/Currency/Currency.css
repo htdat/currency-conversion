@@ -1,9 +1,10 @@
-.currency > div  {
+.currency > div {
   display: inline-block;
 }
 
-.currency .code, .currency .name {
-  margin-right: 5px
+.currency .code,
+.currency .name {
+  margin-right: 5px;
 }
 
 .currency .currency-flag {

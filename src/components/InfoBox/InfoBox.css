@@ -1,4 +1,4 @@
-.info-box  {
+.info-box {
   background-color: transparent;
   animation-duration: 2s;
   animation-iteration-count: 2;
@@ -9,8 +9,12 @@
 }
 
 @keyframes info {
-  0%   {background-color: yellow}
-  50%  {background-color: yellow}
+  0% {
+    background-color: yellow;
+  }
+  50% {
+    background-color: yellow;
+  }
 }
 
 .info-box.success {
@@ -18,8 +22,12 @@
 }
 
 @keyframes success {
-  0%   {background-color: green}
-  50%  {background-color: green}
+  0% {
+    background-color: green;
+  }
+  50% {
+    background-color: green;
+  }
 }
 
 .info-box.error {
@@ -27,6 +35,10 @@
 }
 
 @keyframes error {
-  0%   {background-color: red}
-  50%  {background-color: red}
+  0% {
+    background-color: red;
+  }
+  50% {
+    background-color: red;
+  }
 }

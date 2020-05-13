@@ -1,4 +1,3 @@
-
 .App {
   text-align: left;
   margin: 10px 20px 10px 20px;
@@ -10,7 +9,7 @@
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   padding: 5px;
@@ -60,21 +59,22 @@ select {
 
 /* From and To Components */
 
-.change-currency button, .change-currency .currency{
+.change-currency button,
+.change-currency .currency {
   display: inline;
 }
 
 .amount {
   margin-top: 5px;
-  font-size: 25px
+  font-size: 25px;
 }
 
-.from-currency, .change-currency {
+.from-currency,
+.change-currency {
   border: 1px green dashed;
   padding: 10px;
   border-radius: 5px;
 }
-
 
 /* EditCurrencies Component */
 
@@ -90,7 +90,8 @@ ul.edit-currencies {
   border-bottom: 1px green dashed;
 }
 
-.selected-currency .currency, .selected-currency span {
+.selected-currency .currency,
+.selected-currency span {
   display: inline;
 }
 

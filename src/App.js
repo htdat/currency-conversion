@@ -1,42 +1,43 @@
-import React from 'react';
-import './App.css';
-import From from './components/From.js';
-import To from './components/To.js';
-import EditCurrencies from './components/EditCurrencies.js';
-import LastFetchTime from './components/LastFetchTime.js';
-import InfoBox from './components/InfoBox/InfoBox.js';
-import Settings from './components/Settings.js';
+import React from "react";
+import "./App.css";
+import From from "./components/From.js";
+import To from "./components/To.js";
+import EditCurrencies from "./components/EditCurrencies.js";
+import LastFetchTime from "./components/LastFetchTime.js";
+import InfoBox from "./components/InfoBox/InfoBox.js";
+import Settings from "./components/Settings.js";
 
-import {getLastFetchTime, canFetchData, isDataReady} from './lib/helpers.js';
+import { getLastFetchTime, canFetchData, isDataReady } from "./lib/helpers.js";
 
 class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     const defaultState = {
-      baseCurrency: 'USD',
+      baseCurrency: "USD",
       baseAmount: 1,
-      changeCurrencies: ['EUR', 'JPY'],
+      changeCurrencies: ["EUR", "JPY"],
       infoBoxData: {
         text: null,
         type: null,
       },
       settings: {
-        source: 'exchangeRateApi',
-        key: '',
-      }
+        source: "exchangeRateApi",
+        key: "",
+      },
     };
 
     this.state = defaultState;
 
     // Parse settings saved in localStorage
-    const keysWithDefaultState = ['infoBoxData']
-    const appState = JSON.parse(localStorage.getItem('appState'));
-    if ( null !== appState ) {
-      Object.keys(defaultState).forEach( item => {
-        this.state[item] = appState.hasOwnProperty(item) && ! keysWithDefaultState.includes(item)
-          ? appState[item]
-          : defaultState[item]
+    const keysWithDefaultState = ["infoBoxData"];
+    const appState = JSON.parse(localStorage.getItem("appState"));
+    if (null !== appState) {
+      Object.keys(defaultState).forEach((item) => {
+        this.state[item] =
+          appState.hasOwnProperty(item) && !keysWithDefaultState.includes(item)
+            ? appState[item]
+            : defaultState[item];
       });
     }
 
@@ -44,7 +45,6 @@ class App extends React.Component {
     this.handleSwapButton = this.handleSwapButton.bind(this);
     this.updateCurrencies = this.updateCurrencies.bind(this);
     this.saveAppSettings = this.saveAppSettings.bind(this);
-
   }
 
   handleBaseAmountChange(value) {
@@ -59,7 +59,9 @@ class App extends React.Component {
     this.setState({
       baseCurrency: changeCode,
       baseAmount: 1,
-      changeCurrencies: changes.map(code => code === changeCode ? base : code),
+      changeCurrencies: changes.map((code) =>
+        code === changeCode ? base : code
+      ),
     });
   }
 
@@ -68,54 +70,54 @@ class App extends React.Component {
       baseCurrency: codes[0],
       baseAmount: 1,
       changeCurrencies: codes.slice(1),
-    })
+    });
   }
 
-  saveAppSettings(data){
+  saveAppSettings(data) {
     this.setState({
-      settings: data
-    })
+      settings: data,
+    });
   }
 
   async handleFetchData() {
-      let infoBoxData = {
-        text: 'Loading exchange rates...',
-        type: 'info'
-      }
+    let infoBoxData = {
+      text: "Loading exchange rates...",
+      type: "info",
+    };
 
-      if ( ! isDataReady() ) {
-        infoBoxData.text = 'Loading exchange rates for the first time use...'
-      }
+    if (!isDataReady()) {
+      infoBoxData.text = "Loading exchange rates for the first time use...";
+    }
 
-      this.setState({
-        infoBoxData: infoBoxData
-      })
+    this.setState({
+      infoBoxData: infoBoxData,
+    });
 
-      const {source, key} = this.state.settings
-      const isSucceed = await canFetchData(source, key);
+    const { source, key } = this.state.settings;
+    const isSucceed = await canFetchData(source, key);
 
-      infoBoxData = isSucceed
-        ? { text: 'Fetching data successfully!', type: 'success'}
-        : { text: 'Can not load fetch data!', type: 'error'}
+    infoBoxData = isSucceed
+      ? { text: "Fetching data successfully!", type: "success" }
+      : { text: "Can not load fetch data!", type: "error" };
 
-      this.setState({
-        infoBoxData: infoBoxData
-      })
+    this.setState({
+      infoBoxData: infoBoxData,
+    });
   }
 
   componentDidMount() {
     // Only fetch new data each 24 hours
-    if ( Date.now() - getLastFetchTime() > 24 * 60 * 60 ) {
-      this.handleFetchData()
+    if (Date.now() - getLastFetchTime() > 24 * 60 * 60) {
+      this.handleFetchData();
     }
   }
 
   // Update localStorage when any state is changed
   componentDidUpdate() {
-    localStorage.setItem('appState', JSON.stringify(this.state))
+    localStorage.setItem("appState", JSON.stringify(this.state));
   }
 
-  render(){
+  render() {
     let componentWithData = isDataReady() && (
       <>
         <EditCurrencies
@@ -133,12 +135,9 @@ class App extends React.Component {
           {...this.state}
         />
 
-        <To
-          data={this.state}
-          handleSwapButton={this.handleSwapButton}
-        />
+        <To data={this.state} handleSwapButton={this.handleSwapButton} />
       </>
-    )
+    );
 
     return (
       <div className="App">
@@ -149,19 +148,28 @@ class App extends React.Component {
         <main className="App-main">
           {componentWithData}
 
-          <InfoBox
-            { ...this.state.infoBoxData }
-          />
+          <InfoBox {...this.state.infoBoxData} />
 
-          <LastFetchTime time={getLastFetchTime()}/>
+          <LastFetchTime time={getLastFetchTime()} />
         </main>
 
-        <hr/>
+        <hr />
 
         <footer className="App-footer">
-        Made with <span role="img" aria-label="love">❤️</span> in <a href="https://github.com/htdat/currency-conversion" target="_blank" rel="noopener noreferrer">GitHub</a>.
+          Made with{" "}
+          <span role="img" aria-label="love">
+            ❤️
+          </span>{" "}
+          in{" "}
+          <a
+            href="https://github.com/htdat/currency-conversion"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+          .
         </footer>
-
       </div>
     );
   }
