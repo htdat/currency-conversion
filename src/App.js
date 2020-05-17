@@ -137,7 +137,12 @@ class App extends React.Component {
           baseAmount={parseInt(this.state.baseAmount)}
         />
 
-        <To data={this.state} handleSwapButton={this.handleSwapButton} />
+        <To
+          baseCurrency={this.state.baseCurrency}
+          baseAmount={parseInt(this.state.baseAmount)}
+          changeCurrencies={this.state.changeCurrencies}
+          handleSwapButton={this.handleSwapButton}
+        />
       </>
     );
 
