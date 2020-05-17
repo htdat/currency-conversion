@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import Currency from "./Currency/Currency.js";
 
 class From extends React.Component {
@@ -37,5 +39,11 @@ class From extends React.Component {
     );
   }
 }
+
+From.propTypes = {
+  baseCurrency: PropTypes.string.isRequired,
+  baseAmount: PropTypes.number.isRequired,
+  onBaseAmountChange: PropTypes.func.isRequired,
+};
 
 export default From;

@@ -121,7 +121,8 @@ class App extends React.Component {
     let componentWithData = isDataReady() && (
       <>
         <EditCurrencies
-          data={this.state}
+          baseCurrency={this.state.baseCurrency}
+          changeCurrencies={this.state.changeCurrencies}
           updateCurrencies={this.updateCurrencies}
         />
 
@@ -132,10 +133,16 @@ class App extends React.Component {
 
         <From
           onBaseAmountChange={this.handleBaseAmountChange}
-          {...this.state}
+          baseCurrency={this.state.baseCurrency}
+          baseAmount={parseInt(this.state.baseAmount)}
         />
 
-        <To data={this.state} handleSwapButton={this.handleSwapButton} />
+        <To
+          baseCurrency={this.state.baseCurrency}
+          baseAmount={parseInt(this.state.baseAmount)}
+          changeCurrencies={this.state.changeCurrencies}
+          handleSwapButton={this.handleSwapButton}
+        />
       </>
     );
 
@@ -150,7 +157,7 @@ class App extends React.Component {
 
           <InfoBox {...this.state.infoBoxData} />
 
-          <LastFetchTime time={getLastFetchTime()} />
+          <LastFetchTime timestamp={getLastFetchTime()} />
         </main>
 
         <hr />

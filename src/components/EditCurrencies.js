@@ -1,8 +1,10 @@
 import React from "react";
-import Currency from "./Currency/Currency.js";
-import { getAvailCurrencies } from "../lib/helpers.js";
 import Modal from "react-responsive-modal";
+import PropTypes from "prop-types";
+
 import currencyNames from "../constants/currencies.json";
+import { getAvailCurrencies } from "../lib/helpers.js";
+import Currency from "./Currency/Currency.js";
 
 class EditCurrencies extends React.Component {
   constructor(props) {
@@ -17,8 +19,8 @@ class EditCurrencies extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     // Any time props change and when the model is NOT open,
-    // update selectedCurrencies state from props.data
-    const { baseCurrency, changeCurrencies } = props.data;
+    // update selectedCurrencies state from props
+    const { baseCurrency, changeCurrencies } = props;
 
     return state.open
       ? null
@@ -119,5 +121,11 @@ class EditCurrencies extends React.Component {
     );
   }
 }
+
+EditCurrencies.propTypes = {
+  baseCurrency: PropTypes.string.isRequired,
+  changeCurrencies: PropTypes.array.isRequired,
+  updateCurrencies: PropTypes.func.isRequired,
+};
 
 export default EditCurrencies;
