@@ -1,5 +1,7 @@
 import React from "react";
 import Modal from "react-responsive-modal";
+import PropTypes from "prop-types";
+
 import rateSources from "../constants/sources.json";
 import { canFetchData } from "../lib/helpers.js";
 
@@ -131,3 +133,11 @@ export default class Settings extends React.Component {
     );
   }
 }
+
+Settings.propTypes = {
+  data: PropTypes.exact({
+    source: PropTypes.oneOf(Object.keys(rateSources)),
+    key: PropTypes.string,
+  }),
+  saveAppSettings: PropTypes.func.isRequired,
+};
