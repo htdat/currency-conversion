@@ -121,7 +121,8 @@ class App extends React.Component {
     let componentWithData = isDataReady() && (
       <>
         <EditCurrencies
-          data={this.state}
+          baseCurrency={this.state.baseCurrency}
+          changeCurrencies={this.state.changeCurrencies}
           updateCurrencies={this.updateCurrencies}
         />
 
