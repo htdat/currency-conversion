@@ -157,7 +157,7 @@ class App extends React.Component {
 
           <InfoBox {...this.state.infoBoxData} />
 
-          <LastFetchTime time={getLastFetchTime()} />
+          <LastFetchTime timestamp={getLastFetchTime()} />
         </main>
 
         <hr />
