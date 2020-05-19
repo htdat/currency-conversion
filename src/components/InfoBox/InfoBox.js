@@ -1,49 +1,37 @@
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
 import "./InfoBox.css";
-import React from "react";
 
-export default class InfoBox extends React.Component {
-  // prop.text: string
-  // prop.type: info, success, error
-  constructor(props) {
-    super(props);
-    this.state = { open: true };
-    this.dismiss = this.dismiss.bind(this);
-  }
+const boxTypes = ["info", "success", "error"];
+export default function InfoBox(props) {
+  const [open, setOpen] = useState(true);
 
-  dismiss() {
-    this.setState({
-      open: false,
-    });
-  }
+  // Try two different ways to validate props
+  const text = "text" in props ? props.text : null;
+  const type = !("type" in props)
+    ? "info"
+    : boxTypes.includes(props.type)
+    ? props.type
+    : "info";
 
-  componentDidUpdate(prevProps) {
-    // Make sure this component display
-    // every time it gets a new value for 'text' prop
-    if (this.props.text !== prevProps.text) {
-      this.setState({ open: true });
-    }
-  }
+  useEffect(() => {
+    setOpen(true);
+  }, [text]);
 
-  render() {
-    const open = this.state.open;
-
-    // Try two different ways to validate props
-    const text = "text" in this.props ? this.props.text : null;
-    const type = !("type" in this.props)
-      ? "info"
-      : ["info", "success", "error"].includes(this.props.type)
-      ? this.props.type
-      : "info";
-
-    // Build style classes
-    const classes = ["info-box", type].join(" ");
-    return (
-      text &&
-      open && (
-        <div className={classes}>
-          {text} <button onClick={this.dismiss}>Dismiss</button>
-        </div>
-      )
-    );
-  }
+  // Build style classes
+  const classes = ["info-box", type].join(" ");
+  return (
+    text &&
+    open && (
+      <div className={classes}>
+        {text} <button onClick={() => setOpen(false)}>Dismiss</button>
+      </div>
+    )
+  );
 }
+
+InfoBox.propTypes = {
+  text: PropTypes.string,
+  type: PropTypes.oneOf(boxTypes),
+};
