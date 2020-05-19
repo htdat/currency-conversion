@@ -3,41 +3,30 @@ import PropTypes from "prop-types";
 
 import Currency from "./Currency/Currency.js";
 
-class From extends React.Component {
-  constructor(props) {
-    super(props);
-    this.changeAmount = this.changeAmount.bind(this);
-  }
+export default function From(props) {
+  const { baseCurrency, baseAmount, onBaseAmountChange } = props;
+  const formattedBaseAmount = isNaN(parseFloat(baseAmount))
+    ? ""
+    : parseFloat(baseAmount).toLocaleString("fullwide", {
+        maximumFractionDigits: 2,
+      });
 
-  changeAmount(e) {
-    this.props.onBaseAmountChange(e.target.value);
-  }
-
-  render() {
-    const { baseCurrency, baseAmount } = this.props;
-    const formattedBaseAmount = isNaN(parseFloat(baseAmount))
-      ? ""
-      : parseFloat(baseAmount).toLocaleString("fullwide", {
-          maximumFractionDigits: 2,
-        });
-
-    return (
-      <div className="From">
-        <h2>From:</h2>
-        <figure className="from-currency">
-          <Currency code={baseCurrency} />
-          <input
-            value={baseAmount}
-            onChange={this.changeAmount}
-            type="number"
-          />
-          <div className="amount">
-            <span>{baseCurrency}</span> {formattedBaseAmount}
-          </div>
-        </figure>
-      </div>
-    );
-  }
+  return (
+    <div className="From">
+      <h2>From:</h2>
+      <figure className="from-currency">
+        <Currency code={baseCurrency} />
+        <input
+          value={baseAmount}
+          onChange={(e) => onBaseAmountChange(e.target.value)}
+          type="number"
+        />
+        <div className="amount">
+          <span>{baseCurrency}</span> {formattedBaseAmount}
+        </div>
+      </figure>
+    </div>
+  );
 }
 
 From.propTypes = {
@@ -45,5 +34,3 @@ From.propTypes = {
   baseAmount: PropTypes.number.isRequired,
   onBaseAmountChange: PropTypes.func.isRequired,
 };
-
-export default From;
