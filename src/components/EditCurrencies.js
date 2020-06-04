@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-responsive-modal";
 import PropTypes from "prop-types";
 
@@ -6,43 +6,35 @@ import currencyNames from "../constants/currencies.json";
 import { getAvailCurrencies } from "../lib/helpers.js";
 import Currency from "./Currency/Currency.js";
 
-class EditCurrencies extends React.Component {
-  constructor(props) {
-    super(props);
+export default function EditCurrencies(props) {
+  // props
+  const { baseCurrency, changeCurrencies, updateCurrencies } = props;
 
-    this.state = {
-      open: false, // state for Modal
-      selectedCurrencies: [], // see getDerivedStateFromProps()
-      displayCurrencies: getAvailCurrencies(),
-    };
-  }
+  // state
+  const [open, setOpen] = useState(false);
+  const [displayCurrencies, setDisplayCurrencies] = useState(
+    getAvailCurrencies()
+  );
+  const [selectedCurrencies, setSelectedCurrencies] = useState([]);
+  useEffect(() => {
+    if (open) {
+      setSelectedCurrencies([baseCurrency, ...changeCurrencies]);
+    }
+  }, [baseCurrency, changeCurrencies, open]);
 
-  static getDerivedStateFromProps(props, state) {
-    // Any time props change and when the model is NOT open,
-    // update selectedCurrencies state from props
-    const { baseCurrency, changeCurrencies } = props;
-
-    return state.open
-      ? null
-      : { selectedCurrencies: [baseCurrency, ...changeCurrencies] };
-  }
-
-  onOpenModal = () => {
-    this.setState({
-      open: true,
-      displayCurrencies: getAvailCurrencies(),
-    });
+  const onOpenModal = () => {
+    setOpen(true);
+    setDisplayCurrencies(getAvailCurrencies());
   };
 
-  onCloseModal = () => {
-    this.props.updateCurrencies(this.state.selectedCurrencies);
-    this.setState({
-      open: false,
-    });
+  const onCloseModal = () => {
+    setOpen(false);
+    updateCurrencies(selectedCurrencies);
   };
 
-  addRemove = (code) => {
-    const currencies = this.state.selectedCurrencies;
+  // Handle when clicking/touching on the currecy list
+  const addRemove = (code) => {
+    const currencies = [...selectedCurrencies];
 
     if (currencies.includes(code)) {
       // Remove this code if it exists in the current selected currencies
@@ -53,73 +45,68 @@ class EditCurrencies extends React.Component {
       currencies.push(code);
     }
 
-    this.setState({
-      selectedCurrencies: currencies,
-    });
+    setSelectedCurrencies(currencies);
   };
 
-  search = (e) => {
+  // Search matched currencies on a given keyword
+  const search = (keyword) => {
     const availCurrencies = getAvailCurrencies();
-    const regex = new RegExp(e.target.value.toLowerCase());
+    const regex = new RegExp(keyword.toLowerCase());
 
     const result = availCurrencies.filter((code) => {
       const text = (code + " " + currencyNames[code]).toLowerCase();
       return regex.test(text);
     });
 
-    this.setState({
-      displayCurrencies: result,
-    });
+    setDisplayCurrencies(result);
   };
 
-  render() {
-    const { selectedCurrencies, displayCurrencies, open } = this.state;
-
-    const printSelectedCurrencies = selectedCurrencies.map((code) => {
-      return (
-        displayCurrencies.includes(code) && (
-          <li
-            className="selected-currency"
-            key={code}
-            onClick={() => this.addRemove(code)}
-          >
-            <Currency code={code} />{" "}
-            <span role="img" aria-label="selected">
-              ★
-            </span>
-          </li>
-        )
-      );
-    });
-
-    const printOtherCurrencies = displayCurrencies.map((code) => {
-      return (
-        !selectedCurrencies.includes(code) && (
-          <li key={code} onClick={() => this.addRemove(code)}>
-            <Currency code={code} />
-          </li>
-        )
-      );
-    });
-
+  // Print a list including selected currencies
+  const printSelectedCurrencies = selectedCurrencies.map((code) => {
     return (
-      <>
-        <button onClick={this.onOpenModal}>Edit Currencies</button>
-        <Modal open={open} onClose={this.onCloseModal}>
-          <h1>Select currencies</h1>
-          <input
-            type="text"
-            placeholder="Search currencies"
-            onChange={this.search}
-          />
-          <ul className="edit-currencies">
-            {printSelectedCurrencies}
-            {printOtherCurrencies}
-          </ul>
-        </Modal>
-      </>
+      displayCurrencies.includes(code) && (
+        <li
+          className="selected-currency"
+          key={code}
+          onClick={() => addRemove(code)}
+        >
+          <Currency code={code} />{" "}
+          <span role="img" aria-label="selected">
+            ★
+          </span>
+        </li>
+      )
     );
-  }
+  });
+
+  // Print another currency list but excluding selected currencies
+  const printOtherCurrencies = displayCurrencies.map((code) => {
+    return (
+      !selectedCurrencies.includes(code) && (
+        <li key={code} onClick={() => addRemove(code)}>
+          <Currency code={code} />
+        </li>
+      )
+    );
+  });
+
+  return (
+    <>
+      <button onClick={() => onOpenModal()}>Edit Currencies</button>
+      <Modal open={open} onClose={() => onCloseModal()}>
+        <h1>Select currencies</h1>
+        <input
+          type="text"
+          placeholder="Search currencies"
+          onChange={(e) => search(e.target.value)}
+        />
+        <ul className="edit-currencies">
+          {printSelectedCurrencies}
+          {printOtherCurrencies}
+        </ul>
+      </Modal>
+    </>
+  );
 }
 
 EditCurrencies.propTypes = {
@@ -127,5 +114,3 @@ EditCurrencies.propTypes = {
   changeCurrencies: PropTypes.array.isRequired,
   updateCurrencies: PropTypes.func.isRequired,
 };
-
-export default EditCurrencies;
