@@ -4,15 +4,23 @@ import PropTypes from "prop-types";
 import Currency from "./Currency/Currency.js";
 import { convert } from "../lib/helpers.js";
 
-class To extends React.Component {
-  toBlock(currencyCode) {
-    const { baseCurrency, baseAmount } = this.props;
+export default function To(props) {
+  // Parse props
+  const {
+    baseCurrency,
+    baseAmount,
+    changeCurrencies,
+    handleSwapButton,
+  } = props;
+
+  // Define how a block looks like
+  function toBlock(currencyCode) {
     const convertedAmount = convert(baseCurrency, currencyCode, baseAmount);
     return (
       <figure className="change-currency" key={currencyCode}>
         <button
           onClick={() => {
-            this.props.handleSwapButton(currencyCode);
+            handleSwapButton(currencyCode);
           }}
           className="swap"
           label="swap"
@@ -27,15 +35,13 @@ class To extends React.Component {
     );
   }
 
-  render() {
-    const { changeCurrencies } = this.props;
-    return (
-      <div className="To">
-        <h2>To:</h2>
-        {changeCurrencies.map((code) => this.toBlock(code))}
-      </div>
-    );
-  }
+  // Render
+  return (
+    <div className="To">
+      <h2>To:</h2>
+      {changeCurrencies.map((code) => toBlock(code))}
+    </div>
+  );
 }
 
 To.propTypes = {
@@ -44,5 +50,3 @@ To.propTypes = {
   changeCurrencies: PropTypes.array.isRequired,
   handleSwapButton: PropTypes.func.isRequired,
 };
-
-export default To;
