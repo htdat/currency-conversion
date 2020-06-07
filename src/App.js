@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import "./App.css";
+
 import From from "./components/From.js";
 import To from "./components/To.js";
 import EditCurrencies from "./components/EditCurrencies.js";
@@ -9,77 +11,61 @@ import Settings from "./components/Settings.js";
 
 import { getLastFetchTime, canFetchData, isDataReady } from "./lib/helpers.js";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+// modified version of this guide
+// https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
+function usePersistedState(keyInput, defaultValue) {
+  const key = "app_" + keyInput;
+  const [state, setState] = React.useState(
+    () => JSON.parse(localStorage.getItem(key)) || defaultValue
+  );
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+  return [state, setState];
+}
 
-    const defaultState = {
-      baseCurrency: "USD",
-      baseAmount: 1,
-      changeCurrencies: ["EUR", "JPY"],
-      infoBoxData: {
-        text: null,
-        type: null,
-      },
-      settings: {
-        source: "exchangeRateApi",
-        key: "",
-      },
-    };
+export default function App() {
+  const [baseCurrency, setBaseCurrency] = usePersistedState(
+    "baseCurrency",
+    "USD"
+  );
+  const [baseAmount, setBaseAmount] = usePersistedState("baseAmount", 1);
+  const [
+    changeCurrencies,
+    setChangeCurrencies,
+  ] = usePersistedState("changeCurrencies", ["EUR", "JPY"]);
+  const [settings, setSettings] = usePersistedState("settings", {
+    source: "exchangeRateApi",
+    key: "",
+  });
 
-    this.state = defaultState;
-
-    // Parse settings saved in localStorage
-    const keysWithDefaultState = ["infoBoxData"];
-    const appState = JSON.parse(localStorage.getItem("appState"));
-    if (null !== appState) {
-      Object.keys(defaultState).forEach((item) => {
-        this.state[item] =
-          appState.hasOwnProperty(item) && !keysWithDefaultState.includes(item)
-            ? appState[item]
-            : defaultState[item];
-      });
+  const [infoBoxData, setInfoBoxData] = useState({ text: null, type: null });
+  useEffect(() => {
+    // Only fetch new data each 24 hours
+    if (Date.now() - getLastFetchTime() > 24 * 60 * 60 * 1000) {
+      handleFetchData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    this.handleBaseAmountChange = this.handleBaseAmountChange.bind(this);
-    this.handleSwapButton = this.handleSwapButton.bind(this);
-    this.updateCurrencies = this.updateCurrencies.bind(this);
-    this.saveAppSettings = this.saveAppSettings.bind(this);
+  function handleSwapButton(changeCode) {
+    const base = baseCurrency;
+    const changes = changeCurrencies;
+
+    setBaseCurrency(changeCode);
+    setBaseAmount(1);
+    setChangeCurrencies(
+      changes.map((code) => (code === changeCode ? base : code))
+    );
   }
 
-  handleBaseAmountChange(value) {
-    this.setState({
-      baseAmount: value,
-    });
+  function updateCurrencies(codes) {
+    setBaseCurrency(codes[0]);
+    setBaseAmount(1);
+    setChangeCurrencies(codes.slice(1));
   }
 
-  handleSwapButton(changeCode) {
-    const base = this.state.baseCurrency;
-    const changes = this.state.changeCurrencies;
-    this.setState({
-      baseCurrency: changeCode,
-      baseAmount: 1,
-      changeCurrencies: changes.map((code) =>
-        code === changeCode ? base : code
-      ),
-    });
-  }
-
-  updateCurrencies(codes) {
-    this.setState({
-      baseCurrency: codes[0],
-      baseAmount: 1,
-      changeCurrencies: codes.slice(1),
-    });
-  }
-
-  saveAppSettings(data) {
-    this.setState({
-      settings: data,
-    });
-  }
-
-  async handleFetchData() {
+  async function handleFetchData() {
     let infoBoxData = {
       text: "Loading exchange rates...",
       type: "info",
@@ -89,97 +75,74 @@ class App extends React.Component {
       infoBoxData.text = "Loading exchange rates for the first time use...";
     }
 
-    this.setState({
-      infoBoxData: infoBoxData,
-    });
+    setInfoBoxData(infoBoxData);
 
-    const { source, key } = this.state.settings;
+    const { source, key } = settings;
     const isSucceed = await canFetchData(source, key);
 
     infoBoxData = isSucceed
       ? { text: "Fetching data successfully!", type: "success" }
       : { text: "Can not load fetch data!", type: "error" };
 
-    this.setState({
-      infoBoxData: infoBoxData,
-    });
+    setInfoBoxData(infoBoxData);
   }
 
-  componentDidMount() {
-    // Only fetch new data each 24 hours
-    if (Date.now() - getLastFetchTime() > 24 * 60 * 60 * 1000) {
-      this.handleFetchData();
-    }
-  }
+  const componentWithData = isDataReady() && (
+    <>
+      <EditCurrencies
+        baseCurrency={baseCurrency}
+        changeCurrencies={changeCurrencies}
+        updateCurrencies={updateCurrencies}
+      />
 
-  // Update localStorage when any state is changed
-  componentDidUpdate() {
-    localStorage.setItem("appState", JSON.stringify(this.state));
-  }
+      <Settings data={settings} saveAppSettings={setSettings} />
 
-  render() {
-    let componentWithData = isDataReady() && (
-      <>
-        <EditCurrencies
-          baseCurrency={this.state.baseCurrency}
-          changeCurrencies={this.state.changeCurrencies}
-          updateCurrencies={this.updateCurrencies}
-        />
+      <From
+        onBaseAmountChange={setBaseAmount}
+        baseCurrency={baseCurrency}
+        baseAmount={parseInt(baseAmount)}
+      />
 
-        <Settings
-          data={this.state.settings}
-          saveAppSettings={this.saveAppSettings}
-        />
+      <To
+        baseCurrency={baseCurrency}
+        baseAmount={parseInt(baseAmount)}
+        changeCurrencies={changeCurrencies}
+        handleSwapButton={handleSwapButton}
+      />
+    </>
+  );
 
-        <From
-          onBaseAmountChange={this.handleBaseAmountChange}
-          baseCurrency={this.state.baseCurrency}
-          baseAmount={parseInt(this.state.baseAmount)}
-        />
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Currency Conversion</h1>
+      </header>
 
-        <To
-          baseCurrency={this.state.baseCurrency}
-          baseAmount={parseInt(this.state.baseAmount)}
-          changeCurrencies={this.state.changeCurrencies}
-          handleSwapButton={this.handleSwapButton}
-        />
-      </>
-    );
+      <main className="App-main">
+        {componentWithData}
 
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Currency Conversion</h1>
-        </header>
+        <InfoBox {...infoBoxData} />
 
-        <main className="App-main">
-          {componentWithData}
+        <LastFetchTime timestamp={getLastFetchTime()} />
+      </main>
 
-          <InfoBox {...this.state.infoBoxData} />
+      <hr />
 
-          <LastFetchTime timestamp={getLastFetchTime()} />
-        </main>
-
-        <hr />
-
-        <footer className="App-footer">
-          Made with{" "}
-          <span role="img" aria-label="love">
-            ❤️
-          </span>{" "}
-          in{" "}
-          <a
-            href="https://github.com/htdat/currency-conversion"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            GitHub
-          </a>
-          .
-        </footer>
-      </div>
-    );
-  }
+      <footer className="App-footer">
+        Made with{" "}
+        <span role="img" aria-label="love">
+          ❤️
+        </span>{" "}
+        in{" "}
+        <a
+          href="https://github.com/htdat/currency-conversion"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
+        .
+      </footer>
+    </div>
+  );
 }
-
-export default App;
