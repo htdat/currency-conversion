@@ -92,8 +92,8 @@ export default function EditCurrencies(props) {
 
   return (
     <>
-      <button onClick={() => onOpenModal()}>Edit Currencies</button>
-      <Modal open={open} onClose={() => onCloseModal()}>
+      <button onClick={onOpenModal}>Edit Currencies</button>
+      <Modal open={open} onClose={onCloseModal}>
         <h1>Select currencies</h1>
         <input
           type="text"
