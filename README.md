@@ -9,13 +9,16 @@
 
 ## Roadmap
 
-### v1.x: 
+### v1.1:
 
 - Use [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 - Convert components from class to functions (using hooks)
+
+### v1.2:
+
 - Use Redux to manage state OR use [context](https://reactjs.org/docs/context.html)
 
-### v2: 
+### v2:
 
 - Add settings: font size settings, back or white background, number of decimal
 - Work offline with service workers
