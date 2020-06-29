@@ -89,8 +89,8 @@ export default function Settings(props) {
 
   return (
     <>
-      <button onClick={() => onOpenModal()}>Settings</button>
-      <Modal open={open} onClose={() => onCloseModal()}>
+      <button onClick={onOpenModal}>Settings</button>
+      <Modal open={open} onClose={onCloseModal}>
         <h1>Settings</h1>
         <label htmlFor="data-source">Source: </label>
         <select
@@ -106,8 +106,8 @@ export default function Settings(props) {
         <br />
         {keyField}
         <br />
-        <button onClick={() => onCloseModal()}>Cancel</button> |{" "}
-        <button onClick={() => saveSettings()}>Save</button>
+        <button onClick={onCloseModal}>Cancel</button> |{" "}
+        <button onClick={saveSettings}>Save</button>
       </Modal>
     </>
   );
