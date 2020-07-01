@@ -25,6 +25,7 @@ export const AppContext = React.createContext({
     key: "",
   },
   updateCurrencies: () => {},
+  saveAppSettings: () => {},
 });
 
 export default function App() {
@@ -99,7 +100,7 @@ export default function App() {
 */
       />
 
-      <Settings data={settings} saveAppSettings={setSettings} />
+      <Settings />
 
       <From
         onBaseAmountChange={setBaseAmount}
@@ -122,6 +123,7 @@ export default function App() {
     changeCurrencies,
     settings,
     updateCurrencies,
+    saveAppSettings: setSettings,
   };
 
   return (
