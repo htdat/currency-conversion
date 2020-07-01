@@ -16,6 +16,17 @@ import {
   usePersistedState,
 } from "./lib/helpers.js";
 
+export const AppContext = React.createContext({
+  baseCurrency: "USD",
+  baseAmount: 1,
+  changeCurrencies: ["EUR", "JPY"],
+  settings: {
+    source: "",
+    key: "",
+  },
+  updateCurrencies: () => {},
+});
+
 export default function App() {
   const [baseCurrency, setBaseCurrency] = usePersistedState(
     "baseCurrency",
@@ -82,9 +93,10 @@ export default function App() {
   const componentWithData = isDataReady() && (
     <>
       <EditCurrencies
-        baseCurrency={baseCurrency}
+      /*        baseCurrency={baseCurrency}
         changeCurrencies={changeCurrencies}
         updateCurrencies={updateCurrencies}
+*/
       />
 
       <Settings data={settings} saveAppSettings={setSettings} />
@@ -104,20 +116,28 @@ export default function App() {
     </>
   );
 
+  const contextValue = {
+    baseCurrency,
+    baseAmount,
+    changeCurrencies,
+    settings,
+    updateCurrencies,
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Currency Conversion</h1>
       </header>
+      <AppContext.Provider value={contextValue}>
+        <main className="App-main">
+          {componentWithData}
 
-      <main className="App-main">
-        {componentWithData}
+          <InfoBox {...infoBoxData} />
 
-        <InfoBox {...infoBoxData} />
-
-        <LastFetchTime timestamp={getLastFetchTime()} />
-      </main>
-
+          <LastFetchTime timestamp={getLastFetchTime()} />
+        </main>
+      </AppContext.Provider>
       <hr />
 
       <footer className="App-footer">

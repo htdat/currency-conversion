@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Modal from "react-responsive-modal";
 import PropTypes from "prop-types";
 
 import currencyNames from "../constants/currencies.json";
 import { getAvailCurrencies } from "../lib/helpers.js";
 import Currency from "./Currency/Currency.js";
+import { AppContext } from "../App.js";
 
-export default function EditCurrencies(props) {
-  // props
-  const { baseCurrency, changeCurrencies, updateCurrencies } = props;
+export default function EditCurrencies() {
+  // Extract values from context
+  const { baseCurrency, changeCurrencies, updateCurrencies } = useContext(
+    AppContext
+  );
 
   // state
   const [open, setOpen] = useState(false);
@@ -108,9 +111,3 @@ export default function EditCurrencies(props) {
     </>
   );
 }
-
-EditCurrencies.propTypes = {
-  baseCurrency: PropTypes.string.isRequired,
-  changeCurrencies: PropTypes.array.isRequired,
-  updateCurrencies: PropTypes.func.isRequired,
-};
