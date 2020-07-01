@@ -9,20 +9,12 @@ import LastFetchTime from "./components/LastFetchTime.js";
 import InfoBox from "./components/InfoBox/InfoBox.js";
 import Settings from "./components/Settings.js";
 
-import { getLastFetchTime, canFetchData, isDataReady } from "./lib/helpers.js";
-
-// modified version of this guide
-// https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
-function usePersistedState(keyInput, defaultValue) {
-  const key = "app_" + keyInput;
-  const [state, setState] = React.useState(
-    () => JSON.parse(localStorage.getItem(key)) || defaultValue
-  );
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
-  }, [key, state]);
-  return [state, setState];
-}
+import {
+  getLastFetchTime,
+  canFetchData,
+  isDataReady,
+  usePersistedState,
+} from "./lib/helpers.js";
 
 export default function App() {
   const [baseCurrency, setBaseCurrency] = usePersistedState(

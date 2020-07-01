@@ -1,5 +1,6 @@
 import currencyNames from "../constants/currencies.json";
 import rateSources from "../constants/sources.json";
+import React, { useEffect } from "react";
 
 /*
  * Fetching exchange rate data
@@ -79,4 +80,17 @@ export function getRates() {
 export function getAvailCurrencies() {
   return Object.keys(getRates().rates) // get all codes in currency
     .filter((code) => currencyNames.hasOwnProperty(code)); // get only codes with defeined currency names
+}
+
+// modified version of this guide
+// https://dev.to/selbekk/persisting-your-react-state-in-9-lines-of-code-9go
+export function usePersistedState(keyInput, defaultValue) {
+  const key = "app_" + keyInput;
+  const [state, setState] = React.useState(
+    () => JSON.parse(localStorage.getItem(key)) || defaultValue
+  );
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+  return [state, setState];
 }
