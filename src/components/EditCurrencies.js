@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import Modal from "react-responsive-modal";
-import PropTypes from "prop-types";
 
 import currencyNames from "../constants/currencies.json";
 import { getAvailCurrencies } from "../lib/helpers.js";

@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "react-responsive-modal";
-import PropTypes from "prop-types";
 
 import rateSources from "../constants/sources.json";
 import { canFetchData } from "../lib/helpers.js";
-
-function keyCheckInfo(txt) {
-  return txt && <div>{txt}</div>;
-}
+import Source from "./Settings/Source.js";
+import Key from "./Settings/Key.js";
+import { AppContext } from "../App.js";
 
 export default function Settings(props) {
-  const { data, saveAppSettings } = props;
+  const { settings, saveAppSettings } = useContext(AppContext);
+
   const [open, setOpen] = useState(false);
   const [infoTxt, setInfoTxt] = useState("");
-  const [source, setSource] = useState(data.source);
-  const [key, setKey] = useState(data.key);
+  const [source, setSource] = useState(settings.source);
+  const [key, setKey] = useState(settings.key);
 
   const onOpenModal = () => {
     // Reset these state values back to their parent values
@@ -22,8 +21,8 @@ export default function Settings(props) {
     // @TODO - make sure EditCurrencies and Settings components having the same approach
     setOpen(true);
     setInfoTxt("");
-    setSource(data.source);
-    setKey(data.key);
+    setSource(settings.source);
+    setKey(settings.key);
   };
 
   const onCloseModal = () => {
@@ -46,65 +45,27 @@ export default function Settings(props) {
     }
 
     saveAppSettings({
-      source: source,
-      key: key,
+      source,
+      key,
     });
 
     onCloseModal();
   }
-
-  const options = Object.keys(rateSources).map((item) => {
-    const keyInfo = rateSources[item].keyRequired
-      ? "(free - key required)"
-      : "(free - no key)";
-    return (
-      <option value={item} key={item}>
-        {rateSources[item].name} {keyInfo}
-      </option>
-    );
-  });
-
-  const sourceInfo = (
-    <a
-      href={rateSources[source].info}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Learn more about this source.
-    </a>
-  );
-
-  const keyField = rateSources[source].keyRequired && (
-    <>
-      <label htmlFor="data-key">Key: </label>
-      <input
-        type="text"
-        id="data-key"
-        onChange={(e) => setKey(e.target.value)}
-        defaultValue={key}
-      />
-      {keyCheckInfo(infoTxt)}
-    </>
-  );
 
   return (
     <>
       <button onClick={onOpenModal}>Settings</button>
       <Modal open={open} onClose={onCloseModal}>
         <h1>Settings</h1>
-        <label htmlFor="data-source">Source: </label>
-        <select
-          id="data-source"
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-        >
-          {options}
-        </select>
-        <br />
-        {sourceInfo}
+        <Source source={source} setSource={setSource} />
         <br />
         <br />
-        {keyField}
+        <Key
+          infoTxt={infoTxt}
+          keyText={key}
+          setKey={setKey}
+          display={rateSources[source].keyRequired}
+        />
         <br />
         <button onClick={onCloseModal}>Cancel</button> |{" "}
         <button onClick={saveSettings}>Save</button>
@@ -112,11 +73,3 @@ export default function Settings(props) {
     </>
   );
 }
-
-Settings.propTypes = {
-  data: PropTypes.exact({
-    source: PropTypes.oneOf(Object.keys(rateSources)),
-    key: PropTypes.string,
-  }),
-  saveAppSettings: PropTypes.func.isRequired,
-};
