@@ -96,10 +96,14 @@ export default function App() {
 
   const componentWithData = isDataReady() && (
     <>
-      <EditCurrencies />
-      <Settings />
-      <From />
-      <To />
+      <div id="config">
+        <EditCurrencies />
+        <Settings />
+      </div>
+      <div id="currency-display">
+        <From />
+        <To />
+      </div>
     </>
   );
 
@@ -118,7 +122,7 @@ export default function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Currency Conversion</h1>
+        <h1 class="center">Currency Conversion</h1>
       </header>
       <AppContext.Provider value={contextValue}>
         <main className="App-main">
