@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect, useContext } from "react";
 
 import "./InfoBox.css";
+import { AppContext } from "../../App.js";
 
 const boxTypes = ["info", "success", "error"];
-export default function InfoBox(props) {
+export default function InfoBox() {
   const [open, setOpen] = useState(true);
 
+  const data = useContext(AppContext).infoBoxData;
+
   // Try two different ways to validate props
-  const text = "text" in props ? props.text : null;
-  const type = !("type" in props)
+  const text = "text" in data ? data.text : null;
+  const type = !("type" in data)
     ? "info"
-    : boxTypes.includes(props.type)
-    ? props.type
+    : boxTypes.includes(data.type)
+    ? data.type
     : "info";
 
   useEffect(() => {
@@ -30,8 +32,3 @@ export default function InfoBox(props) {
     )
   );
 }
-
-InfoBox.propTypes = {
-  text: PropTypes.string,
-  type: PropTypes.oneOf(boxTypes),
-};

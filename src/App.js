@@ -28,6 +28,7 @@ export const AppContext = React.createContext({
   saveAppSettings: () => {},
   setBaseAmount: () => {},
   handleSwapButton: () => {},
+  infoBoxData: { text: null, type: null },
 });
 
 export default function App() {
@@ -111,6 +112,7 @@ export default function App() {
     saveAppSettings: setSettings,
     setBaseAmount,
     handleSwapButton,
+    infoBoxData,
   };
 
   return (
@@ -121,9 +123,7 @@ export default function App() {
       <AppContext.Provider value={contextValue}>
         <main className="App-main">
           {componentWithData}
-
-          <InfoBox {...infoBoxData} />
-
+          <InfoBox />
           <LastFetchTime timestamp={getLastFetchTime()} />
         </main>
       </AppContext.Provider>
