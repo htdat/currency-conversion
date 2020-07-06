@@ -14,9 +14,9 @@
 - Use [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 - Convert components from class to functions (using hooks)
 
-### v1.2:
+### v1.2 - Done on 2020.07.06
 
-- Use Redux to manage state OR use [context](https://reactjs.org/docs/context.html)
+- Use [context](https://reactjs.org/docs/context.html)
 
 ### v2:
 
