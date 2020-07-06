@@ -1,17 +1,17 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 
 import Currency from "./Currency/Currency.js";
 import { convert } from "../lib/helpers.js";
+import { AppContext } from "../App.js";
 
-export default function To(props) {
+export default function To() {
   // Parse props
   const {
     baseCurrency,
     baseAmount,
     changeCurrencies,
     handleSwapButton,
-  } = props;
+  } = useContext(AppContext);
 
   // Define how a block looks like
   function toBlock(currencyCode) {
@@ -43,10 +43,3 @@ export default function To(props) {
     </div>
   );
 }
-
-To.propTypes = {
-  baseCurrency: PropTypes.string.isRequired,
-  baseAmount: PropTypes.number.isRequired,
-  changeCurrencies: PropTypes.array.isRequired,
-  handleSwapButton: PropTypes.func.isRequired,
-};

@@ -1,10 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
 
 import Currency from "./Currency/Currency.js";
+import { AppContext } from "../App.js";
 
-export default function From(props) {
-  const { baseCurrency, baseAmount, onBaseAmountChange } = props;
+export default function From() {
+  const { baseCurrency, baseAmount, setBaseAmount } = useContext(AppContext);
+
   const formattedBaseAmount = isNaN(parseFloat(baseAmount))
     ? ""
     : parseFloat(baseAmount).toLocaleString("fullwide", {
@@ -18,7 +19,7 @@ export default function From(props) {
         <Currency code={baseCurrency} />
         <input
           value={baseAmount}
-          onChange={(e) => onBaseAmountChange(e.target.value)}
+          onChange={(e) => setBaseAmount(e.target.value)}
           type="number"
         />
         <div className="amount">
@@ -28,9 +29,3 @@ export default function From(props) {
     </div>
   );
 }
-
-From.propTypes = {
-  baseCurrency: PropTypes.string.isRequired,
-  baseAmount: PropTypes.number.isRequired,
-  onBaseAmountChange: PropTypes.func.isRequired,
-};

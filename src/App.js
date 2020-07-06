@@ -26,6 +26,8 @@ export const AppContext = React.createContext({
   },
   updateCurrencies: () => {},
   saveAppSettings: () => {},
+  setBaseAmount: () => {},
+  handleSwapButton: () => {},
 });
 
 export default function App() {
@@ -52,7 +54,7 @@ export default function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleSwapButton(changeCode) {
+  const handleSwapButton = (changeCode) => {
     const base = baseCurrency;
     const changes = changeCurrencies;
 
@@ -61,7 +63,7 @@ export default function App() {
     setChangeCurrencies(
       changes.map((code) => (code === changeCode ? base : code))
     );
-  }
+  };
 
   function updateCurrencies(codes) {
     setBaseCurrency(codes[0]);
@@ -93,27 +95,10 @@ export default function App() {
 
   const componentWithData = isDataReady() && (
     <>
-      <EditCurrencies
-      /*        baseCurrency={baseCurrency}
-        changeCurrencies={changeCurrencies}
-        updateCurrencies={updateCurrencies}
-*/
-      />
-
+      <EditCurrencies />
       <Settings />
-
-      <From
-        onBaseAmountChange={setBaseAmount}
-        baseCurrency={baseCurrency}
-        baseAmount={parseInt(baseAmount)}
-      />
-
-      <To
-        baseCurrency={baseCurrency}
-        baseAmount={parseInt(baseAmount)}
-        changeCurrencies={changeCurrencies}
-        handleSwapButton={handleSwapButton}
-      />
+      <From />
+      <To />
     </>
   );
 
@@ -124,6 +109,8 @@ export default function App() {
     settings,
     updateCurrencies,
     saveAppSettings: setSettings,
+    setBaseAmount,
+    handleSwapButton,
   };
 
   return (
