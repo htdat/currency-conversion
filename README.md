@@ -9,7 +9,7 @@
 
 ## Roadmap
 
-### v1.1:
+### v1.1 - Done on 2020.06.29
 
 - Use [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
 - Convert components from class to functions (using hooks)
