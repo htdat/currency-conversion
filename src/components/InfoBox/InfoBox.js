@@ -19,6 +19,9 @@ export default function InfoBox() {
 
   useEffect(() => {
     setOpen(true);
+
+    // Auto-close the message after 5 seconds
+    setTimeout(() => setOpen(false), 5000);
   }, [text]);
 
   // Build style classes
